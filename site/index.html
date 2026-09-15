@@ -246,7 +246,7 @@
 
   .heatmap-wrap{
     position:relative; width:100%; aspect-ratio:51/40; border-radius:6px;
-    overflow:hidden; cursor:grab; touch-action:none; outline:none;
+    overflow:hidden; touch-action:none; outline:none;
   }
   .heatmap-wrap:focus-visible{ box-shadow:0 0 0 2px var(--a-3); }
   .chart-card .heatmap-wrap canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
@@ -260,17 +260,6 @@
     content:""; position:absolute; left:50%; bottom:0; width:5px; height:5px;
     margin-left:-2.5px; border-radius:50%; background:#f5f1e8; box-shadow:0 0 3px rgba(0,0,0,.8);
   }
-  .heatmap-zoom{
-    position:absolute; right:.6rem; bottom:.6rem; display:flex; flex-direction:column;
-    border-radius:6px; overflow:hidden; box-shadow:0 1px 6px rgba(0,0,0,.35);
-  }
-  .heatmap-zoom button{
-    width:28px; height:28px; border:none; background:rgba(20,18,16,.75); color:#f5f1e8;
-    font-size:1.1rem; font-family:"Work Sans",sans-serif; line-height:1; cursor:pointer;
-    display:flex; align-items:center; justify-content:center; touch-action:manipulation;
-  }
-  .heatmap-zoom button:hover{ background:rgba(20,18,16,.92); }
-  .heatmap-zoom button:first-child{ border-bottom:1px solid rgba(255,255,255,.15); }
   .swatch{ width:10px; height:10px; border-radius:3px; display:inline-block; }
 
   /* ================= CITAÇÕES: marcador clicável + overlay com a fonte ================= */
@@ -437,14 +426,9 @@
 
     <div class="chart-card">
       <h3>Manaus em 2025, célula a célula<button type="button" class="cite" data-cite="mapa-2025" aria-label="Ver fonte deste dado"></button></h3>
-      <p class="chart-sub">temperatura de superfície diurna, média do ano · arraste pra mover, role o mouse ou use os botões (ou as teclas + e −) pra aproximar</p>
-      <div class="heatmap-wrap" id="heatmap-wrap" tabindex="0" role="application" aria-label="Mapa interativo de Manaus: arraste para mover, use as teclas mais e menos para aproximar e afastar">
+      <div class="heatmap-wrap" id="heatmap-wrap" tabindex="0" role="application">
         <canvas id="chart-heatmap" role="img" aria-label="Mapa da grade de Manaus em 2025: células mais quentes em vermelho, mais frias em verde"></canvas>
         <div class="heatmap-labels" id="heatmap-labels"></div>
-        <div class="heatmap-zoom">
-          <button type="button" id="heatmap-zoom-in" aria-label="Aproximar">+</button>
-          <button type="button" id="heatmap-zoom-out" aria-label="Afastar">−</button>
-        </div>
       </div>
       <div class="heatmap-legend">
         <span>24,3°C</span>
@@ -1232,15 +1216,13 @@
     desenharBarraDivergente('chart-chuva-dias', DIAS_MES, ' dias');
   })();
 
-  // ================= chart-heatmap (mapa interativo: zoom + pan) =================
+  // ================= chart-heatmap =================
   (function(){
     const wrap = document.getElementById('heatmap-wrap');
     const canvas = document.getElementById('chart-heatmap');
     if(!wrap || !canvas) return;
     const ctx = canvas.getContext('2d');
     const labelsLayer = document.getElementById('heatmap-labels');
-    const btnIn = document.getElementById('heatmap-zoom-in');
-    const btnOut = document.getElementById('heatmap-zoom-out');
 
     const NROW = HEAT.nrow, NCOL = HEAT.ncol;
     // Escala em blocos de 0,5°C (não gradiente contínuo, e não a mesma
@@ -1427,97 +1409,6 @@
         }
       });
     }
-
-    function zoomPara(novoZoom, mouseXFrac, mouseYFrac){
-      const halfW = 0.5/view.zoom, halfH = 0.5/view.zoom;
-      const dataX = (view.cx-halfW) + mouseXFrac*2*halfW;
-      const dataY = (view.cy-halfH) + mouseYFrac*2*halfH;
-      view.zoom = novoZoom;
-      const halfW2 = 0.5/view.zoom, halfH2 = 0.5/view.zoom;
-      view.cx = dataX - (mouseXFrac-0.5)*2*halfW2;
-      view.cy = dataY - (mouseYFrac-0.5)*2*halfH2;
-      clampView();
-      desenhar();
-    }
-
-    btnIn.addEventListener('click', () => zoomPara(view.zoom*1.6, 0.5, 0.5));
-    btnOut.addEventListener('click', () => zoomPara(view.zoom/1.6, 0.5, 0.5));
-
-    wrap.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      const rect = canvas.getBoundingClientRect();
-      const mx = (e.clientX-rect.left)/rect.width;
-      const my = (e.clientY-rect.top)/rect.height;
-      const fator = e.deltaY < 0 ? 1.15 : 1/1.15;
-      zoomPara(view.zoom*fator, mx, my);
-    }, { passive:false });
-
-    let arrastando = false, ultimoX = 0, ultimoY = 0, pinchDist = null;
-    function iniciarArrasto(x, y){ arrastando = true; ultimoX = x; ultimoY = y; wrap.style.cursor = 'grabbing'; }
-    function moverArrasto(x, y){
-      if(!arrastando) return;
-      const rect = canvas.getBoundingClientRect();
-      const halfW = 0.5/view.zoom, halfH = 0.5/view.zoom;
-      view.cx -= (x-ultimoX)/rect.width * 2*halfW;
-      view.cy -= (y-ultimoY)/rect.height * 2*halfH;
-      ultimoX = x; ultimoY = y;
-      clampView();
-      desenhar();
-    }
-    function pararArrasto(){ arrastando = false; pinchDist = null; wrap.style.cursor = 'grab'; }
-    function distanciaToques(t0, t1){ return Math.hypot(t1.clientX-t0.clientX, t1.clientY-t0.clientY); }
-    function meioToques(t0, t1){ return { x:(t0.clientX+t1.clientX)/2, y:(t0.clientY+t1.clientY)/2 }; }
-
-    wrap.addEventListener('mousedown', (e) => iniciarArrasto(e.clientX, e.clientY));
-    window.addEventListener('mousemove', (e) => moverArrasto(e.clientX, e.clientY));
-    window.addEventListener('mouseup', pararArrasto);
-
-    // toque nos botões de zoom não deve virar arrasto nem bloquear o
-    // clique -- e.preventDefault() num touchstart suprime o clique
-    // emulado no mobile mesmo quando chamado num ancestral do botão.
-    wrap.addEventListener('touchstart', (e) => {
-      if(e.target.closest('.heatmap-zoom')) return;
-      if(e.touches.length === 2){
-        arrastando = false;
-        pinchDist = distanciaToques(e.touches[0], e.touches[1]);
-      } else {
-        const t = e.touches[0];
-        iniciarArrasto(t.clientX, t.clientY);
-      }
-      e.preventDefault();
-    }, { passive:false });
-    wrap.addEventListener('touchmove', (e) => {
-      if(e.target.closest('.heatmap-zoom')) return;
-      if(e.touches.length === 2){
-        const d = distanciaToques(e.touches[0], e.touches[1]);
-        if(pinchDist){
-          const rect = canvas.getBoundingClientRect();
-          const meio = meioToques(e.touches[0], e.touches[1]);
-          const mx = (meio.x-rect.left)/rect.width;
-          const my = (meio.y-rect.top)/rect.height;
-          zoomPara(view.zoom * (d/pinchDist), mx, my);
-        }
-        pinchDist = d;
-      } else if(e.touches.length === 1){
-        const t = e.touches[0];
-        moverArrasto(t.clientX, t.clientY);
-      }
-      e.preventDefault();
-    }, { passive:false });
-    wrap.addEventListener('touchend', (e) => {
-      if(e.touches.length < 2) pinchDist = null;
-      if(e.touches.length === 0) pararArrasto();
-    });
-
-    wrap.addEventListener('keydown', (e) => {
-      const passo = 0.08/view.zoom;
-      if(e.key === '+' || e.key === '='){ zoomPara(view.zoom*1.4, 0.5, 0.5); e.preventDefault(); }
-      else if(e.key === '-' || e.key === '_'){ zoomPara(view.zoom/1.4, 0.5, 0.5); e.preventDefault(); }
-      else if(e.key === 'ArrowLeft'){ view.cx -= passo; clampView(); desenhar(); e.preventDefault(); }
-      else if(e.key === 'ArrowRight'){ view.cx += passo; clampView(); desenhar(); e.preventDefault(); }
-      else if(e.key === 'ArrowUp'){ view.cy -= passo; clampView(); desenhar(); e.preventDefault(); }
-      else if(e.key === 'ArrowDown'){ view.cy += passo; clampView(); desenhar(); e.preventDefault(); }
-    });
 
     // Barra da legenda desenhada com a mesma corCelula, pra mostrar os
     // blocos de verdade em vez de um gradiente suave que não existe no mapa.
