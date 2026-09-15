@@ -10,7 +10,7 @@ de "onde mexer pra fazer o quê".
 ```
 ├── site/                    # Site estático (HTML/CSS/JS puro, sem build)
 │   └── index.html           # Página única — é isto que o Vercel publica
-├── scripts/                 # Pipeline de dados, roda em ordem (01 a 08)
+├── scripts/                 # Pipeline de dados, roda em ordem (01 a 11)
 ├── src/mapa_amazonia/       # Código compartilhado entre os scripts
 │   ├── config.py            # Todo parâmetro do projeto mora aqui
 │   ├── grade.py             # Construção da grade espacial (Earth Engine)
@@ -50,10 +50,21 @@ projeto Earth Engine. Depois rode os scripts em ordem, de dentro de `scripts/`:
 | `06_deriva_orbital.py` | Mede o horário real de passagem do satélite Terra por mês |
 | `07_curva_horaria_ar.py` | Calcula a curva horária real de temperatura do ar (calibração) |
 | `08_corrigir_deriva_orbital.py` | Aplica a correção de deriva orbital, gera `*_corrigido` |
+| `09_precipitacao_mensal.py` | Exporta volume (CHIRPS v3 PENTAD) e dias de chuva (CHIRPS v3 DAILY_SAT) mensais, cidade inteira |
+| `10_montar_chuva.py` | Limpa o CSV de chuva, salva `chuva_mensal.parquet` e agrega `chuva_anual.json` |
+| `11_precipitacao_era5_land.py` | Checagem cruzada independente (ERA5-Land, 1979–2025) do achado de 09/10 |
 
 Os scripts 03 e 04 exportam para o Google Drive de forma assíncrona (Earth
 Engine não permite exportar tabelas grandes de forma síncrona) — baixe os
 CSVs resultantes para `data/raw/` antes de rodar `05_montar_tabelas.py`.
+
+Os scripts 09 e 11 são diferentes: como reduzem o bbox inteiro (não a grade
+de 1 km — o pixel do CHIRPS/ERA5-Land é maior que boa parte da mancha
+urbana, então não faz sentido fingir resolução célula a célula pra chuva),
+o resultado é só uma centena de números, pequeno o bastante pra vir direto
+num `.getInfo()` síncrono. Não usam `drive.py` nem passam por `data/raw/`
+manualmente do mesmo jeito que 03/04 — o próprio script já escreve o CSV
+final em `data/raw/`.
 
 A metodologia completa de cada etapa de limpeza — o quê, o porquê, quantos
 valores afetou — está documentada em `data/processed/criterios_limpeza.json`
@@ -76,6 +87,12 @@ Manaus e podem precisar reavaliação em outra região:
 (filtro de anomalia climatológica). Veja os comentários ao lado de cada um
 em `config.py` para o raciocínio usado para chegar no valor.
 
+`PRECIP_MM_MIN`/`PRECIP_MM_MAX` (faixa plausível de chuva) também foram
+calibrados contra a normal climatológica de Manaus — revise numa cidade com
+regime de chuva diferente. `DATA_INICIO_ERA5` (1979, não o início real do
+dataset em 1950) é uma decisão específica de qualidade de dado documentada
+no próprio comentário do config.py — vale ler antes de mudar.
+
 A correção de deriva orbital (scripts 06–08) é específica do satélite Terra
 (MOD11A2) e da janela 2020–2026 em que a deriva está documentada pela NASA —
 revise se ainda se aplica antes de reusar em um projeto com período diferente.
@@ -96,6 +113,25 @@ blocos de dados diretamente no `<script>` do `index.html`.
 Para rodar localmente, basta abrir `site/index.html` num navegador (ou servir
 a pasta `site/` com qualquer servidor estático — `python3 -m http.server`,
 por exemplo).
+
+**Tooltip de gráfico (hover/toque):** todo gráfico de ponto ou barra que
+precisa mostrar o valor exato (halo, hotspot, os dois de chuva — não o
+scatter, que é denso demais) usa `ativarTooltip(elemento, getHtml)`, definida
+junto dos outros helpers (`el`/`cssVar`/`aoEntrarNaTela`). Não usar `<title>`
+do SVG pra isso: no mobile ele só aparece com toque-e-segure, e segurar num
+elemento com texto perto aciona o menu de seleção/callout do navegador, uma
+experiência ruim já corrigida uma vez neste projeto. `ativarTooltip` mostra
+no hover do mouse e no toque simples (sem segurar) no celular, fechando só
+ao tocar fora de qualquer ponto.
+
+**Degradê de cor das seções (`--h0`...`--h9`):** não é mais uma progressão
+linear de matiz — foi recalibrado pra cair rápido nas primeiras seções (sai
+do verde puro já nas primeiras 3-4 seções) e achatar depois, porque a versão
+linear original ficava "verde demais por tempo demais" antes de a página
+parecer "quente". Ao inserir uma seção nova no meio da sequência, não
+reproduza um espaçamento uniforme entre os stops — decida a matiz olhando
+o que já veio antes dela na narrativa (mais pra perto de verde ou de
+vermelho) e ajuste manualmente os stops seguintes pra manter a curva suave.
 
 ## Deploy (Vercel)
 

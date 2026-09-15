@@ -1,7 +1,7 @@
 # Manaus Odeia Árvores
 
-25 anos de dados de satélite (2001–2025) cruzando temperatura de superfície
-e perda de vegetação urbana em Manaus, célula a célula, numa grade de 1 km.
+25 anos de dados de satélite (2001–2025) cruzando temperatura de superfície,
+perda de vegetação e chuva em Manaus, célula a célula, numa grade de 1 km.
 
 **Site:** [manausodeiaarvores.com.br](https://manausodeiaarvores.com.br)  
 **Autor:** [brunotemum.site](https://brunotemum.site)
@@ -26,6 +26,8 @@ entender o deploy no Vercel, veja **[Claude-INSTRUCTIONS.md](Claude-INSTRUCTIONS
 | Vegetação (NDVI) | MODIS MOD13Q1 | 250 m | 16 dias → agregado mensal |
 | Água (máscara do rio) | JRC Global Surface Water | 30 m | Ocorrência histórica 1984–2021 |
 | Temperatura do ar | Open-Meteo (reanálise ERA5) | Ponto único | Diária, desde 1940 |
+| Chuva (volume + dias de chuva) | CHIRPS v3 (PENTAD + DAILY_SAT) | ~5,5 km, cidade inteira | Mensal, 2001–2025 |
+| Chuva — checagem cruzada | ERA5-Land (reanálise) | ~11 km, cidade inteira | Mensal, 1979–2025 |
 
 Todas as fontes são gratuitas e de acesso público. Os dados processados
 (Parquet por ano + GeoJSON da grade + JSONs de contexto) ficam em
@@ -79,6 +81,31 @@ Aplicados nesta ordem (`scripts/05_montar_tabelas.py`; números completos em
    calibrar a amplitude. Gera colunas novas (`lst_dia_c_corrigido`,
    `lst_noite_c_corrigido`) ao lado das originais, sem sobrescrevê-las — o
    site usa a versão corrigida por padrão, com opção de ver o dado bruto.
+
+### Chuva: fonte, período de confiança e o que não misturar
+
+CHIRPS v3 é a fonte oficial (volume via produto PENTAD, dias de chuva via
+produto diário DAILY_SAT, limiar de 1mm/dia, padrão da Organização
+Meteorológica Mundial), reduzida sobre o bbox inteiro — sem quebra por
+célula ou zona, porque o pixel nativo (~5,5 km) é maior que boa parte da
+mancha urbana. ERA5-Land entra só como checagem cruzada independente, e só
+a partir de 1979: rodamos a série completa desde 1950 uma vez, achamos um
+vale suspeito em 1961 (mais seco que a própria seca histórica de 1963 do
+Rio Negro, o evento realmente documentado dessa década), e a literatura
+confirma uma queda de qualidade na ERA5 antes da era de assimilação de
+satélite (pré-1979), pior especificamente sobre floresta tropical.
+
+Achados centrais (comparando a média da primeira metade da série com a
+segunda, não só os anos das pontas, que são sensíveis a um único El Niño):
+volume e dias de chuva caem nas duas fontes, mas a queda **não é uniforme
+ao longo do ano** — concentra-se na estação seca (junho a outubro); a
+estação chuvosa (dezembro a maio) segue praticamente estável. Um estudo de
+2025 que comparou várias fontes pra tendência de chuva na bacia amazônica
+inteira encontrou o oposto (leve alta), o que não é necessariamente
+contradição: o padrão local de Manaus pode divergir do padrão da bacia como
+um todo, e esse mesmo estudo aponta a ERA5 como a menos confiável das
+fontes comparadas. Não usar o dado deste projeto para afirmar nada sobre
+"a Amazônia" — só sobre Manaus.
 
 ### Limitações conhecidas
 
