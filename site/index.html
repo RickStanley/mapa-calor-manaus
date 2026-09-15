@@ -1254,7 +1254,10 @@
         const nBlocos = Math.ceil((CORTE - COLD_ANCORA) / PASSO);
         const i = Math.max(0, Math.floor((v - COLD_ANCORA) / PASSO));
         const t = Math.min(1, i / (nBlocos - 1));
-        return `hsl(142 ${(55 + t*18).toFixed(0)}% ${(22 + t*20).toFixed(0)}%)`;
+        // Invertido de propósito: verde mais CLARO = mais frio (t baixo),
+        // verde mais ESCURO = mais quente (t alto, perto do corte pro
+        // vermelho) — mais saturado também, pra reforçar a leitura.
+        return `hsl(142 ${(55 + t*18).toFixed(0)}% ${(42 - t*20).toFixed(0)}%)`;
       }
       const nBlocos = Math.ceil((REALCE - CORTE) / PASSO);
       const i = Math.floor((v - CORTE) / PASSO);
