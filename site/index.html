@@ -28,8 +28,8 @@
   :root{
     --ink:#2b2620; --ink-soft:#5c5347; --ink-mute:#847a6c;
     --paper:#fbf8f1; --paper-line:#e7e0d1;
-    --chart-green:#0E8A73; --chart-red:#C1543A;
-    --h0:130; --h1:114; --h2:98; --h3:81; --h4:65; --h5:49; --h6:33; --h7:16; --h8:0;
+    --chart-green:#0E8A73; --chart-red:#C1543A; --chart-yellow:#C1A63A;
+    --h0:130; --h1:105; --h2:70; --h3:45; --h4:30; --h5:22; --h6:15; --h7:9; --h8:4; --h9:0;
     --wash-s:38%; --wash-l:91%;
     --accent-s:46%; --accent-l:32%;
     --a-0: hsl(var(--h0) var(--accent-s) var(--accent-l));
@@ -40,13 +40,14 @@
     --a-5: hsl(var(--h5) var(--accent-s) var(--accent-l));
     --a-6: hsl(var(--h6) var(--accent-s) var(--accent-l));
     --a-7: hsl(var(--h7) var(--accent-s) var(--accent-l));
+    --a-8: hsl(var(--h8) var(--accent-s) var(--accent-l));
     --shadow: 0 1px 2px rgba(43,38,32,.06), 0 6px 20px -8px rgba(43,38,32,.18);
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
       --ink:#f1ece0; --ink-soft:#c9c0ae; --ink-mute:#93897a;
       --paper:#242019; --paper-line:#3a3327;
-      --chart-green:#249E87; --chart-red:#DD6644;
+      --chart-green:#249E87; --chart-red:#DD6644; --chart-yellow:#DDBE44;
       --wash-s:26%; --wash-l:15%;
       --accent-s:58%; --accent-l:68%;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px -10px rgba(0,0,0,.55);
@@ -128,10 +129,11 @@
   .sec-5{ background: linear-gradient(180deg, hsl(var(--h5) var(--wash-s) var(--wash-l)), hsl(var(--h6) var(--wash-s) var(--wash-l))); }
   .sec-6{ background: linear-gradient(180deg, hsl(var(--h6) var(--wash-s) var(--wash-l)), hsl(var(--h7) var(--wash-s) var(--wash-l))); }
   .sec-7{ background: linear-gradient(180deg, hsl(var(--h7) var(--wash-s) var(--wash-l)), hsl(var(--h8) var(--wash-s) var(--wash-l))); }
+  .sec-8{ background: linear-gradient(180deg, hsl(var(--h8) var(--wash-s) var(--wash-l)), hsl(var(--h9) var(--wash-s) var(--wash-l))); }
   .sec-0 h2{ color:var(--a-0) } .sec-1 h2{ color:var(--a-1) } .sec-2 h2{ color:var(--a-2) }
   .sec-3 h2{ color:var(--a-3) } .sec-4 h2{ color:var(--a-4) } .sec-5 h2{ color:var(--a-5) }
-  .sec-6 h2{ color:var(--a-6) } .sec-7 h2{ color:var(--a-7) }
-  .sec-5 .effect-icon{ color:var(--a-5) }
+  .sec-6 h2{ color:var(--a-6) } .sec-7 h2{ color:var(--a-7) } .sec-8 h2{ color:var(--a-8) }
+  .sec-6 .effect-icon{ color:var(--a-6) }
 
   /* ================= THERMOMETER BAR ================= */
   .therm{ margin:4.6rem auto 0; max-width:420px; }
@@ -158,6 +160,7 @@
   .tile .cap{ font-size:.85rem; color:var(--ink-soft); margin-top:.2rem; }
   .tile.accent-1 .num{ color:var(--a-1) } .tile.accent-2 .num{ color:var(--a-2) }
   .tile.accent-3 .num{ color:var(--a-3) } .tile.accent-4 .num{ color:var(--a-4) }
+  .tile.accent-5 .num{ color:var(--a-5) }
   .row2{ display:flex; flex-wrap:wrap; justify-content:center; gap:2.2rem 3rem; margin-top:.15rem; }
 
   .note{ margin:1.4rem auto 0; max-width:58ch; font-size:.9rem; color:var(--ink-soft); font-style:italic; }
@@ -205,7 +208,7 @@
   @media (max-width:680px){ .carousel-prev{ left:.4rem; } .carousel-next{ right:.4rem; } }
   .carousel-dots{ display:flex; justify-content:center; gap:.45rem; margin-top:.9rem; }
   .carousel-dot{ width:.5rem; height:.5rem; border-radius:50%; border:none; padding:0; background:var(--paper-line); cursor:pointer; }
-  .carousel-dot.ativo{ background:var(--a-6); }
+  .carousel-dot.ativo{ background:var(--a-7); }
 
   .chart-card{
     margin:1.8rem auto; max-width:620px;
@@ -214,6 +217,19 @@
   }
   .chart-card.revelado{ opacity:1; transform:translateY(0); }
   .chart-card svg path{ transition: stroke-dashoffset 1.4s ease-out .15s; }
+  .chart-card svg rect.bar-diverge{ transition: height .8s cubic-bezier(.22,.8,.25,1), y .8s cubic-bezier(.22,.8,.25,1); }
+  .grafico-tooltip{
+    position:fixed; pointer-events:none; z-index:40; background:var(--ink); color:var(--paper);
+    font-family:"Work Sans",sans-serif; font-size:.78rem; padding:.4rem .65rem; border-radius:6px;
+    white-space:nowrap; transform:translate(-50%,-120%); opacity:0; transition:opacity .12s ease;
+    font-variant-numeric:tabular-nums;
+  }
+  .grafico-tooltip.mostrar{ opacity:1; }
+  .grafico-tooltip b{ font-family:"Fraunces",serif; display:block; }
+  /* pontos/barras com tooltip: sem callout nem seleção de texto no toque
+     longo -- é exatamente esse callout do navegador que atrapalhava no
+     mobile antes desta correção. */
+  .pt-dado{ touch-action:manipulation; -webkit-touch-callout:none; -webkit-user-select:none; user-select:none; }
   .chart-card h3{ margin:0 0 .15rem; font-size:1.08rem; font-weight:600; }
   .chart-card .chart-sub{ font-size:.82rem; color:var(--ink-mute); margin:0 0 .9rem; }
   .chart-card svg{ width:100%; height:auto; display:block; overflow:visible; }
@@ -312,7 +328,7 @@
   .qcard[open] summary::after{ transform:rotate(45deg); }
   .qcard p{ margin:.9rem 0 0; padding:0 2.2rem; color:var(--ink-soft); font-size:.94rem; }
 
-  footer{ background:hsl(var(--h8) var(--wash-s) var(--wash-l)); padding:2.4rem 0 3rem; }
+  footer{ background:hsl(var(--h9) var(--wash-s) var(--wash-l)); padding:2.4rem 0 3rem; }
   footer .cols{ display:flex; flex-direction:column; gap:2.2rem; font-size:.9rem; line-height:1.6; color:var(--ink-soft); text-align:center; }
   footer .cols > div{ max-width:58ch; margin:0 auto; }
   footer h4{ font-size:.74rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 .6rem; font-family:"Work Sans",sans-serif; }
@@ -463,7 +479,59 @@
   </div>
 </section>
 
-<section class="block sec-5" id="efeitos">
+<section class="block sec-5" id="chuva">
+  <div class="wrap">
+    <h2>A seca ficou mais seca</h2>
+    <p class="dek">Comparando a primeira metade da série de chuva de Manaus, entre 2001 e 2012, com a segunda metade, de 2013 a 2025, a cidade está chovendo menos: cai o volume de chuva por ano e caem, principalmente, os dias de chuva por ano. O mesmo padrão aparece numa segunda fonte de dado independente, que cobre um período bem mais longo, desde 1979.</p>
+
+    <div class="row2">
+      <div class="tile accent-5">
+        <span class="label">Volume anual</span>
+        <span class="num" style="font-size:1.9rem">−5,6%<button type="button" class="cite" data-cite="chuva-volume" aria-label="Ver fonte deste dado"></button></span>
+        <span class="cap">De 2.319mm/ano (2001–12) para 2.188mm/ano (2013–25).</span>
+      </div>
+      <div class="tile accent-5">
+        <span class="label">Dias de chuva</span>
+        <span class="num" style="font-size:1.9rem">−9,1%<button type="button" class="cite" data-cite="chuva-dias" aria-label="Ver fonte deste dado"></button></span>
+        <span class="cap">De 237,8 dias/ano (2001–12) para 216,2 dias/ano (2013–25).</span>
+      </div>
+    </div>
+
+    <p class="dek" style="margin-top:2.4rem">Mas essa queda não está espalhada igualmente ao longo do ano. Ela se concentra no período de maior calor e seca, aumentando os efeitos do calor mencionados na próxima seção. Julho, sozinho, é o mês mais castigado em dias de chuva.</p>
+
+    <div class="row2">
+      <div class="tile accent-5">
+        <span class="label">Julho</span>
+        <span class="num" style="font-size:1.9rem">−19%<button type="button" class="cite" data-cite="chuva-julho" aria-label="Ver fonte deste dado"></button></span>
+        <span class="cap">Dias de chuva no mês: de 14,2 (2001–12) para 11,5 (2013–25). Numa segunda fonte independente (ERA5-Land), a queda chega a 29%.</span>
+      </div>
+      <div class="tile accent-5">
+        <span class="label">Estação seca (jun–out)</span>
+        <span class="num" style="font-size:1.9rem">−14%<button type="button" class="cite" data-cite="chuva-estacao-seca" aria-label="Ver fonte deste dado"></button></span>
+        <span class="cap">Dias de chuva no período: de 72,6 (2001–12) para 62,3 (2013–25). Na mesma segunda fonte, a queda chega a 25%.</span>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3>Volume de chuva, mês a mês<button type="button" class="cite" data-cite="chuva-volume" aria-label="Ver fonte deste dado"></button></h3>
+      <p class="chart-sub">variação % entre 2001–12 e 2013–25, mesmo mês do calendário, pra Manaus inteira (cidade e floresta ao redor, sem separar por bairro). Quanto mais perto do vermelho, maior a queda; toque ou passe o mouse pra ver o número exato</p>
+      <svg id="chart-chuva-volume" viewBox="0 0 700 280" role="img" aria-label="Variação percentual do volume de chuva por mês entre os dois períodos, com queda concentrada na estação seca"></svg>
+    </div>
+
+    <div class="chart-card">
+      <h3>Dias de chuva, mês a mês<button type="button" class="cite" data-cite="chuva-dias" aria-label="Ver fonte deste dado"></button></h3>
+      <p class="chart-sub">variação % entre 2001–12 e 2013–25, mesmo mês do calendário, pra Manaus inteira. Toque ou passe o mouse pra ver o número exato</p>
+      <svg id="chart-chuva-dias" viewBox="0 0 700 280" role="img" aria-label="Variação percentual dos dias de chuva por mês entre os dois períodos, com queda concentrada na estação seca"></svg>
+      <p class="note" style="margin-top:.8rem;font-size:.78rem">Dezembro a maio praticamente não mudou. A queda inteira do ano está concentrada nos meses secos.</p>
+    </div>
+
+    <p class="dek" style="margin-top:2.4rem">O mecanismo físico é o mesmo já documentado no resto deste site. Menos árvore significa menos evapotranspiração, o vapor d'água que a vegetação libera e que ajuda a puxar chuva de volta pra região. Uma torre de medição instalada no bairro Petrópolis em 2022 mostra isso na prática: na estação seca, a floresta da Reserva Ducke manda 75% da energia disponível pra evapotranspiração, enquanto a área urbana de Manaus manda só 37%. O resto vira calor seco, não vapor d'água.<button type="button" class="cite" data-cite="chuva-torre-petropolis" aria-label="Ver fonte deste dado"></button></p>
+
+    <div class="note">Esses números são uma média pra Manaus inteira. É esperado que o efeito seja ainda mais forte nas faixas de maior densidade urbana, com mais concreto, mais asfalto e mais prédio e menos árvore, do que essa média sozinha consegue mostrar. Medir isso com precisão exigiria uma fonte de dado com resolução mais fina do que qualquer satélite de chuva disponível hoje.</div>
+  </div>
+</section>
+
+<section class="block sec-6" id="efeitos">
   <div class="wrap">
     <h2>Quem sente o calor subir</h2>
     <p class="dek">O calor que sobe em Manaus não fica só no termômetro. Ele passa pelo corpo, pela conta de luz, pela água que falta e pela lavoura que a própria floresta ainda sustenta.</p>
@@ -500,13 +568,13 @@
           <span class="effect-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M8 19v1"/><path d="M8 14v1"/><path d="M16 19v1"/><path d="M16 14v1"/><path d="M12 21v1"/><path d="M12 16v1"/></svg></span>
         </div>
         <h3>Ambiente</h3>
-        <p>Menos floresta, menos chuva: desmatamento já reduziu safra e renda agrícola na própria Amazônia.<button type="button" class="cite" data-cite="calor-ambiente" aria-label="Ver fonte deste dado"></button></p>
+        <p>Menos floresta, menos chuva: a própria Manaus já tem menos dias de chuva por ano que no início da série.<button type="button" class="cite" data-cite="calor-ambiente" aria-label="Ver fonte deste dado"></button> <a href="#chuva" style="color:inherit;text-decoration:underline">Ver os dados</a>.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="block sec-6">
+<section class="block sec-7">
   <div class="wrap">
     <h2>Parques Sem Sombras</h2>
     <p class="dek">Além de possuir poucos parques pela cidade, Manaus tem o péssimo hábito de construir parques com nenhuma árvore. Ou com árvores que não tem projeção de sombra que faça sentido para uma cidade que continua fervendo.</p>
@@ -541,7 +609,7 @@
   </div>
 </section>
 
-<section class="block sec-7">
+<section class="block sec-8">
   <div class="wrap">
     <h2>Perguntas em aberto</h2>
 
@@ -590,6 +658,8 @@
     <a class="cite-link" id="cite-link" target="_blank" rel="noopener"></a>
   </div>
 </div>
+
+<div class="grafico-tooltip" id="grafico-tooltip" role="status" aria-live="polite"></div>
 
 <script>
   // ================= citacoes: marcador clicavel + overlay com a fonte =================
@@ -680,6 +750,27 @@
         corpo: 'Análise de 1982–2018 encontrou queda de 6% a 30% na chuva sazonal em sete estados produtores de soja associada ao desmatamento na Amazônia — com impacto direto na safra e na renda agrícola na própria região.',
         link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8110785/', linkTexto: 'Ler o estudo (PNAS)',
       },
+      'chuva-volume': {
+        tipo: 'Dado', titulo: 'Volume de chuva: 2001–12 vs. 2013–25',
+        corpo: 'CHIRPS v3 (produto PENTAD, nativo), reduzido sobre o bbox inteiro de Manaus, que inclui a cidade e a floresta ao redor, sem quebra por zona (o pixel de 5,5km é maior que boa parte da malha urbana). Comparação por média de metade da série contra a outra metade, não só os anos das pontas, já que uma janela curta é sensível demais a um único ano de El Niño ou La Niña. Confirmado por uma segunda fonte independente, a reanálise ERA5-Land (1979–2025): mesma direção, queda um pouco maior.',
+      },
+      'chuva-dias': {
+        tipo: 'Dado', titulo: 'Dias de chuva por ano: 2001–12 vs. 2013–25',
+        corpo: 'CHIRPS v3 (produto diário, derivado via satélite IMERG, portanto mais incerto que o volume), limiar de 1mm/dia (padrão da Organização Meteorológica Mundial), mesmo recorte e mesma técnica do número de volume. A queda se concentra na estação seca, entre junho e outubro; dezembro a maio quase não mudou. Confirmado por uma segunda fonte independente (ERA5-Land): mesma direção, queda maior.',
+      },
+      'chuva-julho': {
+        tipo: 'Dado', titulo: 'Julho: o mês mais afetado',
+        corpo: 'CHIRPS v3, mesmo recorte e mesma técnica do resto dos números de chuva do site: 14,2 dias de chuva em julho na média de 2001 a 2012, contra 11,5 dias na média de 2013 a 2025, queda de 19%. Numa segunda fonte independente (reanálise ERA5-Land, 1979–2025), julho também aparece entre os meses mais afetados, com dias de chuva caindo de 24,2 para 17,3 (29%) e volume de 150,2mm para 90,9mm (40%).',
+      },
+      'chuva-estacao-seca': {
+        tipo: 'Dado', titulo: 'Estação seca (junho a outubro): 2001–12 vs. 2013–25',
+        corpo: 'Soma dos dias de chuva de junho a outubro, CHIRPS v3, mesmo bbox e mesma técnica do resto dos números de chuva do site: 72,6 dias na média de 2001 a 2012, contra 62,3 dias na média de 2013 a 2025. Numa segunda fonte independente (ERA5-Land), a queda no mesmo período de 5 meses chega a 25% nos dias de chuva e cerca de 28% no volume.',
+      },
+      'chuva-torre-petropolis': {
+        tipo: 'Estudo', titulo: 'Impacto da urbanização no balanço de energia em Manaus',
+        corpo: 'Torre de medição instalada no bairro Petrópolis (2022) comparou o balanço de energia da área urbana com o de floresta primária (Reserva Ducke). Na estação seca, a floresta destina cerca de 75% da energia disponível pra evapotranspiração, e a área urbana, só cerca de 37%. O resto vira calor sensível, que aquece o ar diretamente em vez de virar vapor d\'água. É o mecanismo físico local por trás da ligação entre perda de vegetação e menos chuva.',
+        link: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12540988/', linkTexto: 'Ler o estudo (Scientific Reports)',
+      },
     };
 
     const overlay = document.getElementById('cite-overlay');
@@ -749,6 +840,53 @@
     aoEntrarNaTela(cartao, () => {
       cartao.classList.add('revelado');
       requestAnimationFrame(() => { paths.forEach(p => { p.style.strokeDashoffset = '0'; }); });
+    });
+  }
+
+  // ================= tooltip compartilhado (mouse + toque) =================
+  // Usado por todo grafico de ponto/barra do site (halo, hotspot, chuva),
+  // exceto o scatter. Um so elemento de tooltip pra pagina inteira -- so um
+  // fica visivel de cada vez, entao nao precisa de um por grafico.
+  //
+  // Mouse: hover mostra e segue o cursor, sair esconde -- sem clique.
+  // Toque: tocar num ponto MOSTRA E FIXA o tooltip aberto (sem precisar
+  // segurar o dedo -- segurar e' o que aciona o menu de selecao de texto
+  // do proprio navegador, a causa da experiencia ruim que motivou esta
+  // reescrita). So fecha tocando fora de qualquer ponto -- inclusive
+  // dentro do mesmo grafico, fora das barras/circulos. Tocar em outro
+  // ponto troca o conteudo direto, sem precisar fechar antes.
+  const graficoTooltip = document.getElementById('grafico-tooltip');
+  function mostrarTooltip(x, y, html){
+    if(!graficoTooltip) return;
+    graficoTooltip.innerHTML = html;
+    graficoTooltip.style.left = x+'px';
+    graficoTooltip.style.top = (y-10)+'px';
+    graficoTooltip.classList.add('mostrar');
+  }
+  function esconderTooltip(){ graficoTooltip?.classList.remove('mostrar'); }
+  document.addEventListener('pointerdown', (e) => {
+    if(!e.target.closest('.pt-dado')) esconderTooltip();
+  });
+  // elemento: o circulo/barra que recebe os eventos. getHtml: funcao que
+  // devolve o conteudo do tooltip (chamada a cada interacao, nao uma vez
+  // so, pra poder computar o texto na hora se precisar).
+  function ativarTooltip(elemento, getHtml){
+    elemento.classList.add('pt-dado');
+    elemento.addEventListener('pointerenter', (ev) => {
+      if(ev.pointerType === 'mouse') mostrarTooltip(ev.clientX, ev.clientY, getHtml());
+    });
+    elemento.addEventListener('pointermove', (ev) => {
+      if(ev.pointerType === 'mouse') mostrarTooltip(ev.clientX, ev.clientY, getHtml());
+    });
+    elemento.addEventListener('pointerleave', (ev) => {
+      if(ev.pointerType === 'mouse') esconderTooltip();
+    });
+    elemento.addEventListener('pointerdown', (ev) => {
+      if(ev.pointerType !== 'mouse'){
+        ev.preventDefault(); // impede o menu de selecao/callout do toque longo
+        ev.stopPropagation(); // impede o listener do documento (acima) de fechar na mesma hora
+      }
+      mostrarTooltip(ev.clientX, ev.clientY, getHtml());
     });
   }
 
@@ -906,7 +1044,11 @@
     svg.appendChild(linePath);
     haloData.forEach(p=>{
       const c=el('circle',{cx:X(p.dist_km),cy:Y(p.lst),r:4,fill:cssVar('--chart-red')});
-      const t=el('title',{}); t.textContent='~'+p.dist_km+' km: '+p.lst.toFixed(2)+'°C'; c.appendChild(t); svg.appendChild(c);
+      svg.appendChild(c);
+      // alvo de toque maior que o ponto visivel (r=4), invisivel, so pra facilitar tocar no celular
+      const alvo=el('circle',{cx:X(p.dist_km),cy:Y(p.lst),r:14,fill:'transparent',style:'cursor:pointer'});
+      svg.appendChild(alvo);
+      ativarTooltip(alvo, () => `<b>~${p.dist_km} km</b>${p.lst.toFixed(2)}°C`);
     });
     prepararLinhas([linePath]);
     revelarCartao(svg.closest('.chart-card') || svg, [linePath]);
@@ -974,8 +1116,11 @@
       svg.appendChild(linha);
       hotspotData.forEach(p=>{
         const c = el('circle',{cx:X(p.ano), cy:Yfn(p[key]), r:2.8, fill:cor});
-        const t = el('title',{}); t.textContent = p.ano+': '+(p[key]>0?'+':'')+p[key].toFixed(1)+'%';
-        c.appendChild(t); svg.appendChild(c);
+        svg.appendChild(c);
+        // alvo de toque maior que o ponto visivel, invisivel
+        const alvo = el('circle',{cx:X(p.ano), cy:Yfn(p[key]), r:12, fill:'transparent', style:'cursor:pointer'});
+        svg.appendChild(alvo);
+        ativarTooltip(alvo, () => `<b>${p.ano}</b>${p[key]>0?'+':''}${p[key].toFixed(1)}%`);
       });
       return linha;
     }
@@ -984,6 +1129,101 @@
 
     prepararLinhas([linhaNdvi, linhaLst]);
     revelarCartao(svg.closest('.chart-card') || svg, [linhaNdvi, linhaLst]);
+  })();
+
+  // ================= chart-chuva-volume / chart-chuva-dias (barra divergente) =================
+  // Mesma técnica pros dois gráficos: uma barra por mês, pra cima ou pra
+  // baixo do zero conforme a variação entre metade inicial (2001-12) e
+  // metade final (2013-25) da série CHIRPS. Cor não é fixa: quanto maior a
+  // queda, mais perto do vermelho (--chart-red, o mesmo "quente" usado no
+  // resto do site pra temperatura); queda pequena ou aumento fica perto do
+  // amarelo (--chart-yellow) -- deliberadamente sem verde aqui, pra não
+  // sugerir "bom" onde não tem sinal de melhora, só de menos piora.
+  (function(){
+    const MESES = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+    // ano/mes só documentativos aqui -- o que importa é a média de cada
+    // mês do calendário nas 12 (volume) ou 13 (dias) observações de cada
+    // metade da série, já calculada em 10_montar_chuva.py.
+    const VOLUME_MES = [
+      {mes:1,inicio:273,fim:254},{mes:2,inicio:295,fim:265},{mes:3,inicio:300,fim:319},
+      {mes:4,inicio:307,fim:268},{mes:5,inicio:238,fim:219},{mes:6,inicio:125,fim:124},
+      {mes:7,inicio:76,fim:78},{mes:8,inicio:59,fim:55},{mes:9,inicio:77,fim:83},
+      {mes:10,inicio:132,fim:116},{mes:11,inicio:179,fim:171},{mes:12,inicio:258,fim:237},
+    ];
+    const DIAS_MES = [
+      {mes:1,inicio:24.6,fim:21.5},{mes:2,inicio:23.6,fim:21.9},{mes:3,inicio:27.0,fim:24.4},
+      {mes:4,inicio:25.9,fim:24.3},{mes:5,inicio:24.5,fim:23.4},{mes:6,inicio:17.8,fim:14.7},
+      {mes:7,inicio:14.2,fim:11.5},{mes:8,inicio:10.5,fim:9.5},{mes:9,inicio:14.2,fim:12.0},
+      {mes:10,inicio:15.9,fim:14.7},{mes:11,inicio:17.1,fim:17.1},{mes:12,inicio:22.5,fim:21.3},
+    ];
+
+    function misturarCores(hexA, hexB, t){
+      t = Math.max(0, Math.min(1, t));
+      const a = [1,3,5].map(i => parseInt(hexA.slice(i,i+2),16));
+      const b = [1,3,5].map(i => parseInt(hexB.slice(i,i+2),16));
+      const m = a.map((va,i) => Math.round(va + (b[i]-va)*t));
+      return `rgb(${m[0]},${m[1]},${m[2]})`;
+    }
+
+    function desenharBarraDivergente(idSvg, dados, unidade){
+      const svg = document.getElementById(idSvg);
+      if(!svg) return;
+
+      const pctChange = dados.map(d => 100*(d.fim-d.inicio)/d.inicio);
+      const maiorQueda = Math.max(1, ...pctChange.map(v => -v)); // maior queda observada (positivo)
+      const corAmarelo = cssVar('--chart-yellow'), corVermelho = cssVar('--chart-red');
+
+      const W=700, H=280, pad={l:44,r:20,t:20,b:34};
+      const maxAbs = Math.max(...pctChange.map(Math.abs)) * 1.15;
+      const plotH = H-pad.t-pad.b;
+      const Y = v => pad.t + plotH/2 - v/maxAbs*(plotH/2);
+      const zeroY = Y(0);
+      const groupW = (W-pad.l-pad.r)/dados.length;
+      const barW = groupW*0.6;
+
+      for(let i=0;i<=4;i++){
+        const v = maxAbs - maxAbs*2*i/4;
+        const gy = Y(v);
+        const linha = el('line',{x1:pad.l,x2:W-pad.r,y1:gy,y2:gy,class:'gridline'});
+        if(Math.abs(v)<0.01){ linha.setAttribute('stroke', cssVar('--ink-mute')); linha.setAttribute('stroke-width','1.3'); }
+        svg.appendChild(linha);
+        const t = el('text',{x:pad.l-8,y:gy+3,'text-anchor':'end',class:'axis'});
+        t.textContent=(v>0?'+':'')+Math.round(v)+'%'; svg.appendChild(t);
+      }
+
+      const barras = [];
+      dados.forEach((d,i) => {
+        const cx = pad.l + i*groupW + groupW/2;
+        const pct = pctChange[i];
+        const cor = misturarCores(corAmarelo, corVermelho, Math.max(0,-pct)/maiorQueda);
+        const bar = el('rect', {
+          class:'bar-diverge', x:cx-barW/2, y:zeroY, width:barW, height:0,
+          fill:cor, rx:2, style:'cursor:pointer',
+          'aria-label': `${MESES[d.mes-1]}: ${pct>=0?'+':''}${pct.toFixed(0)}%`,
+        });
+        svg.appendChild(bar);
+        ativarTooltip(bar, () => `<b>${MESES[d.mes-1]}</b>${pct>=0?'+':''}${pct.toFixed(0)}% (${d.inicio}${unidade} → ${d.fim}${unidade})`);
+        barras.push({ el:bar, yFinal: Y(pct), hFinal: Math.abs(Y(pct)-zeroY) });
+
+        const rot = el('text',{x:cx,y:H-10,'text-anchor':'middle',class:'axis'});
+        rot.textContent = MESES[d.mes-1]; svg.appendChild(rot);
+      });
+
+      aoEntrarNaTela(svg.closest('.chart-card') || svg, () => {
+        svg.closest('.chart-card')?.classList.add('revelado');
+        requestAnimationFrame(() => {
+          barras.forEach(b => {
+            const y = Math.min(b.yFinal, zeroY);
+            b.el.setAttribute('y', y);
+            b.el.setAttribute('height', b.hFinal);
+          });
+        });
+      });
+    }
+
+    desenharBarraDivergente('chart-chuva-volume', VOLUME_MES, 'mm');
+    desenharBarraDivergente('chart-chuva-dias', DIAS_MES, ' dias');
   })();
 
   // ================= chart-heatmap (mapa interativo: zoom + pan) =================

@@ -177,3 +177,83 @@ LIMIAR_Z_CLIMATOLOGICO = 4.0
 # Preencha depois de criar o projeto no Google Cloud e registrá-lo como
 # noncommercial. É uma string tipo "ee-seunome" ou "meu-projeto-123456".
 EE_PROJECT_ID = "mapa-amazonia"
+
+# ---------------------------------------------------------------------------
+# 9. PRECIPITAÇÃO (CHIRPS v3) — ver 09_precipitacao_mensal.py
+# ---------------------------------------------------------------------------
+# Duas coleções, propositalmente diferentes uma da outra:
+#
+# PENTAD é o produto NATIVO do CHIRPS (mm acumulado a cada 5 dias, pentads
+# resetam por calendário — 6 por mês). Usado pro VOLUME, porque é a forma
+# menos derivada de chegar num total mensal.
+#
+# DAILY_SAT reparte o pentad em valores diários usando o padrão espacial do
+# satélite IMERG — é uma camada de derivação a mais. Só é usado pra contar
+# DIAS DE CHUVA, porque "dias de chuva" não existe em produto pentadal.
+# Ou seja: precip_mm (via PENTAD) é mais confiável que dias_chuva (via
+# DAILY_SAT) — documentar esse caveat sempre que os dois aparecerem juntos.
+#
+# CHIRPS v2 (`UCSB-CHG/CHIRPS/DAILY`) será descontinuada depois de dez/2026:
+# por isso já se usa v3 desde o início, sem construir em cima da v2.
+COLECAO_CHUVA_VOLUME = "UCSB-CHC/CHIRPS/V3/PENTAD"
+COLECAO_CHUVA_FREQUENCIA = "UCSB-CHC/CHIRPS/V3/DAILY_SAT"
+BANDA_CHUVA = "precipitation"
+
+# Pixel nativo do CHIRPS: 0,05° ≈ 5566 m. Bem maior que a célula de 1 km
+# usada pro resto do projeto — por isso este script reduz o bbox inteiro
+# de uma vez (reduceRegion), não célula a célula (reduceRegions): rodar
+# contra a grade de 1 km só replicaria o mesmo valor de um pixel grande em
+# dezenas de células vizinhas, sem gerar informação nova.
+RESOLUCAO_CHUVA_NATIVA_M = 5566
+
+# Limiar padrão da Organização Meteorológica Mundial pra contar um dia como
+# "dia de chuva".
+LIMIAR_DIA_CHUVA_MM = 1.0
+
+# Faixas plausíveis pra checagem de sanidade em 10_montar_chuva.py. Normal
+# climatológica INMET 1991-2020 pra Manaus (estação 82331, um ponto — não é
+# o mesmo recorte que o bbox, mas dá a ordem de grandeza): mês mais chuvoso
+# (abril) ~331 mm, mês mais seco (agosto) ~56 mm, total anual ~2.362 mm.
+# As faixas abaixo dão folga considerável pra cima e pra baixo (o bbox
+# inclui floresta ao norte, que pode chover mais que o ponto da estação).
+PRECIP_MM_MIN, PRECIP_MM_MAX = 0.0, 700.0
+DIAS_CHUVA_MIN, DIAS_CHUVA_MAX = 0, 31
+
+# ---------------------------------------------------------------------------
+# 10. PRECIPITAÇÃO — CHECAGEM DE LONGO PRAZO (ERA5-Land) — ver
+#     11_precipitacao_era5_land.py
+# ---------------------------------------------------------------------------
+# Reanálise (não observação direta), mas com uma vantagem que nenhuma outra
+# fonte do projeto tem: metodologia ÚNICA e consistente do início ao fim
+# (ECMWF descreve como "replay" do componente de terra do ERA5 — não é um
+# blend que troca de modelo no meio do período, diferente da API da
+# Open-Meteo, onde testamos e achamos uma troca de modelo em 2017 que criava
+# diferença espacial falsa entre dois pontos). Serve só como checagem
+# cruzada independente do achado do CHIRPS (volume/frequência), numa janela
+# bem mais longa — nunca para dar resolução espacial fina (11 km de pixel é
+# mais grosseiro que o CHIRPS).
+COLECAO_CHUVA_ERA5 = "ECMWF/ERA5_LAND/DAILY_AGGR"
+BANDA_CHUVA_ERA5 = "total_precipitation_sum"
+RESOLUCAO_ERA5_NATIVA_M = 11132
+
+# Banda vem em METROS (acumulado diário de água líquida+sólida), não mm —
+# multiplicar por 1000 pra converter. Esquecer este fator daria um volume
+# 1000x menor que o real (mesma categoria de erro que ESCALA_LST/ESCALA_NDVI
+# acima: satélite/reanálise guarda em unidade compacta, não na unidade
+# física final).
+FATOR_M_PARA_MM = 1000.0
+
+# ERA5-Land está disponível desde 02/01/1950, mas NÃO usamos desde 1950.
+# Pesquisa feita depois de ver um vale suspeito em 1961 (mais seco que a
+# própria seca histórica de 1963 do Rio Negro, que é o evento realmente
+# documentado dessa década) achou dois artigos confirmando que a ERA5 tem
+# uma "descontinuidade"/"efeito degrau" de qualidade entre o período
+# pré-1979 (sem assimilação de satélite) e pós-1979, com precisão
+# especificamente pior sobre floresta tropical no trecho mais antigo. Um
+# estudo recente que compara CHIRPS/ERA5/GPCC/vazão de rio pra tendência de
+# chuva na Amazônia (Nature Sci. Reports, 2025) também só usa 1980 em
+# diante, pelo mesmo motivo. Por isso a série usável começa em 1979 —
+# início de ano civil completo, já dentro da era com assimilação de
+# satélite — mesmo o dataset tecnicamente cobrindo mais pra trás.
+DATA_INICIO_ERA5 = "1979-01-01"
+ANO_INICIO_ERA5 = 1979

@@ -23,6 +23,44 @@
         { "titulo": "Projetadas na gestão de Arthur Virgílio, árvores ipês em avenidas de Manaus florescem há sete anos — Revista Cenarium", "url": "https://revistacenarium.com.br/projetadas-na-gestao-de-arthur-virgilio-arvores-ipes-em-avenidas-de-manaus-florescem-ha-sete-anos/", "verificado_por": "busca" },
         { "titulo": "Pouca arborização agrava as ilhas de calor — A Crítica", "url": "https://www.acritica.com/manaus/pouca-arborizac-o-agrava-as-ilhas-de-calor-1.413033", "verificado_por": "busca" }
       ]
+    },
+    {
+      "id": "chuva_vegetacao",
+      "titulo": "O segundo efeito da perda de vegetação: menos evapotranspiração, menos chuva",
+      "tese": "Além de esquentar (efeito já documentado no resto do site via LST), perder vegetação reduz a evapotranspiração — o vapor d'água que a floresta libera pelas folhas e que alimenta boa parte da chuva regional (reciclagem de umidade). Há dois níveis de evidência bem diferentes que não podem ser misturados: (1) um dado OBSERVADO diretamente em Manaus (torre de fluxo no bairro Petrópolis, 2022) mostrando que a área urbana evapotranspira muito menos que a floresta primária vizinha, e (2) um padrão OBSERVADO em escala de bioma (Hilker et al. 2014, toda a Amazônia, via satélite) ligando queda de precipitação a queda de NDVI desde 2000. Nenhum dos dois é uma medição direta de 'quanto a chuva de Manaus caiu por causa do desmatamento de Manaus' — essa causalidade local specifica não está medida em nenhuma fonte encontrada.",
+      "evidencia_local_observada": {
+        "fonte": "Torre de fluxo turbulento (TURB) instalada no quartel do Corpo de Bombeiros do bairro Petrópolis (zona sul-central de Manaus, 3°S 60°W), rodando em 2022, comparando estação seca (ago-set-out) e chuvosa (fev-mar-abr). Scientific Reports, 2025.",
+        "o_que_foi_medido": "Fluxo de calor latente (LE, proxy direto de evapotranspiração) e fluxo de calor sensível (H) na área urbana, comparados a valores históricos de floresta primária na Reserva Ducke (Shuttleworth et al., 1984) e na Rebio-Jaru (von Randow et al., Amazônia sudoeste).",
+        "numeros": {
+          "le_urbano_estacao_seca_wm2": 110,
+          "le_floresta_ducke_estacao_seca_wm2": 230,
+          "reducao_le_urbano_vs_floresta_pct": 52,
+          "h_urbano_estacao_seca_wm2": 170,
+          "h_floresta_ducke_estacao_seca_wm2": 80,
+          "aumento_h_urbano_vs_floresta_pct": 112,
+          "razao_bowen_urbano_seca": 1.78,
+          "razao_bowen_floresta_ducke_seca": 0.33,
+          "razao_bowen_urbano_chuvosa": 0.88
+        },
+        "leitura": "Na estação seca, a floresta primária manda ~75% da energia disponível pra evapotranspiração (LE); a área urbana de Manaus manda só ~37% — o resto vira calor sensível (aquece o ar diretamente, não gera vapor d'água). É o mecanismo físico local, medido, que sustenta a ideia de 'menos floresta, menos reciclagem de umidade' — mas é uma medição de PARTIÇÃO DE ENERGIA num ponto da cidade em 2022, não uma medição de quanto choveu a mais ou a menos em Manaus por causa disso."
+      },
+      "mecanismo_regional_amazonia": {
+        "fonte": "Hilker et al. (2014), PNAS, 'Vegetation dynamics and rainfall sensitivity of the Amazon' (dados MODIS/MAIAC).",
+        "achado": "Desde 2000, declínio de precipitação foi observado em 69% da área de floresta amazônica estudada; esse declínio de chuva foi associado a cerca de 55% do declínio de NDVI observado no mesmo período.",
+        "escala": "Bioma amazônico inteiro, não Manaus especificamente — usar como pano de fundo do mecanismo (reciclagem de umidade em escala regional), nunca como se fosse um número local da cidade."
+      },
+      "o_que_nao_dizer": {
+        "fonte_do_risco": "Silva Junior et al., Revista Brasileira de Meteorologia (SciELO), modelagem regional BRAMS da Região Metropolitana de Manaus, 4 cenários: EXP-CTRL (mapa 2017 + clima presente 2002-2005), EXP-LULC (mapa PROJETADO pra 2100 + clima presente), EXP-RCP (mapa 2017 + aumento de GEE cenário RCP8.5), EXP-LULC+RCP (combinado).",
+        "armadilha": "O cenário com anomalia forte (~+10°C de temperatura e ~-50% de precipitação) é o EXP-RCP (aumento de gases de efeito estufa), não o EXP-LULC isolado. O efeito do LULC sozinho na precipitação foi descrito pelos autores como 'leve redução' na maior parte da região — e até um AUMENTO de precipitação na área urbana central após horas de pico. Os próprios autores concluem, verbatim: 'MRM's climate is more sensitive to an increase in GHGs than to a local change in LULC'. Além disso, o cenário de desmatamento simulado é uma PROJEÇÃO para 2100, não o desmatamento que já aconteceu.",
+        "regra": "Nunca citar '~50% menos chuva' ou '+10°C' como efeito do desmatamento/perda de vegetação em Manaus — esse número é do cenário de aquecimento global (GEE), e o próprio estudo diz que é o fator predominante, não o uso do solo local. Esta fonte serve só de exemplo de framework de modelagem regional (cenários LULC vs GEE), não como número citável de 'desmatamento reduz chuva em X%' em Manaus."
+      },
+      "nota_de_confianca": "Os números da torre de Petrópolis (LE, H, razão de Bowen) são medição direta publicada em 2025 e são citados com confiança como mecanismo LOCAL observado. O achado de Hilker et al. é observação em escala de bioma (não modelo), citado como pano de fundo regional, sempre identificado como tal. O estudo BRAMS da RMM é modelagem de cenário futuro (2100) e citado apenas para o próprio achado dele (GEE > LULC como fator climático), nunca invertido pra sugerir que o desmatamento já causou metade da chuva sumir — essa leitura seria estatística enganosa, do mesmo tipo que a nota do caso das palmeiras imperiais já evita.",
+      "conexao_com_o_projeto": "A grade de 1km já mostra que a mancha urbana de Manaus perdeu 11% de NDVI e 57 km² de área verde em 25 anos (ver 'perda_vegetacao' e 'area_verde_convertida_km2' em numeros_chave.json), e que isso está ligado a mais calor local. A série de chuva (CHIRPS v3, 'chuva_anual.json') mostra a tendência de volume/frequência da cidade inteira no mesmo período 2001-2025 — sem resolução por célula (o satélite não permite). A narrativa da seção nova de chuva deve ficar no nível certo de causalidade: a evapotranspiração medida caiu de fato onde a floresta virou cidade (evidência local); em escala de bioma, queda de chuva acompanha queda de vegetação (evidência regional); a correlação temporal entre a série de chuva de Manaus e a perda de vegetação de Manaus é sugestiva, não uma prova de causalidade local isolada.",
+      "fontes": [
+        { "titulo": "Impacts of urbanization on energy balance in a central Amazonia city — Scientific Reports (2025)", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12540988/", "verificado_por": "fetch_direto" },
+        { "titulo": "Vegetation dynamics and rainfall sensitivity of the Amazon — Hilker et al., PNAS (2014)", "url": "https://www.pnas.org/doi/10.1073/pnas.1404870111", "verificado_por": "citado_na_pesquisa_compass" },
+        { "titulo": "The Impacts of Changes in Land Use/Land Cover and Increases in Greenhouse Gases on the Surface Energy Balance During the Rainy Season in the Metropolitan Region of Manaus — Revista Brasileira de Meteorologia (SciELO)", "url": "https://www.scielo.br/j/rbmet/a/7yvCcDNYfJNJwD5VB7trKjg/", "verificado_por": "fetch_direto" }
+      ]
     }
   ]
 }

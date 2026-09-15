@@ -1,0 +1,131 @@
+{
+  "_sobre": "Série anual de precipitação (CHIRPS v3), volume total e dias de chuva, cidade inteira (bbox de Manaus, o mesmo do resto do projeto — inclui a mancha urbana e a floresta ao redor, sem quebra por zona/célula). Volume vem do produto PENTAD (nativo, menos derivado); dias de chuva vem da partição diária DAILY_SAT (derivada via satélite IMERG). Gerado por 09_precipitacao_mensal.py + 10_montar_chuva.py.",
+  "caveat_metodologico": "CHIRPS é conhecido por subestimar chuva extrema na Amazônia central — tratar picos/vales muito acentuados com cautela. A contagem de dias de chuva vem de uma partição diária derivada do volume pentadal via satélite IMERG, então tem mais incerteza que o volume pentadal em si: usar como indicativo de tendência, não como valor absoluto de precisão diária. Resolução nativa do CHIRPS (~5,5km) é maior que boa parte do bbox de Manaus — por isso a série é cidade inteira, sem quebra por zona ou célula de 1km (ver docstring de 09_precipitacao_mensal.py).",
+  "serie_anual": [
+    {
+      "ano": 2001,
+      "precip_mm": 2100.2,
+      "dias_chuva": 231.4
+    },
+    {
+      "ano": 2002,
+      "precip_mm": 2306.1,
+      "dias_chuva": 243.1
+    },
+    {
+      "ano": 2003,
+      "precip_mm": 1986.7,
+      "dias_chuva": 230.9
+    },
+    {
+      "ano": 2004,
+      "precip_mm": 2194.2,
+      "dias_chuva": 245.8
+    },
+    {
+      "ano": 2005,
+      "precip_mm": 2626.0,
+      "dias_chuva": 241.9
+    },
+    {
+      "ano": 2006,
+      "precip_mm": 2348.9,
+      "dias_chuva": 249.2
+    },
+    {
+      "ano": 2007,
+      "precip_mm": 2438.7,
+      "dias_chuva": 244.8
+    },
+    {
+      "ano": 2008,
+      "precip_mm": 2842.8,
+      "dias_chuva": 256.5
+    },
+    {
+      "ano": 2009,
+      "precip_mm": 2008.1,
+      "dias_chuva": 219.1
+    },
+    {
+      "ano": 2010,
+      "precip_mm": 2063.1,
+      "dias_chuva": 214.9
+    },
+    {
+      "ano": 2011,
+      "precip_mm": 2634.3,
+      "dias_chuva": 226.9
+    },
+    {
+      "ano": 2012,
+      "precip_mm": 2281.9,
+      "dias_chuva": 248.8
+    },
+    {
+      "ano": 2013,
+      "precip_mm": 2266.7,
+      "dias_chuva": 235.6
+    },
+    {
+      "ano": 2014,
+      "precip_mm": 2280.1,
+      "dias_chuva": 224.6
+    },
+    {
+      "ano": 2015,
+      "precip_mm": 1561.7,
+      "dias_chuva": 182.1
+    },
+    {
+      "ano": 2016,
+      "precip_mm": 2017.1,
+      "dias_chuva": 203.9
+    },
+    {
+      "ano": 2017,
+      "precip_mm": 2364.4,
+      "dias_chuva": 216.2
+    },
+    {
+      "ano": 2018,
+      "precip_mm": 1819.1,
+      "dias_chuva": 208.6
+    },
+    {
+      "ano": 2019,
+      "precip_mm": 2415.5,
+      "dias_chuva": 229.8
+    },
+    {
+      "ano": 2020,
+      "precip_mm": 2039.6,
+      "dias_chuva": 203.5
+    },
+    {
+      "ano": 2021,
+      "precip_mm": 2690.7,
+      "dias_chuva": 260.4
+    },
+    {
+      "ano": 2022,
+      "precip_mm": 2338.3,
+      "dias_chuva": 228.1
+    },
+    {
+      "ano": 2023,
+      "precip_mm": 2204.7,
+      "dias_chuva": 201.1
+    },
+    {
+      "ano": 2024,
+      "precip_mm": 1885.4,
+      "dias_chuva": 180.9
+    },
+    {
+      "ano": 2025,
+      "precip_mm": 2563.6,
+      "dias_chuva": 236.2
+    }
+  ]
+}

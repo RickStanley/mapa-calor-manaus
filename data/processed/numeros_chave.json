@@ -131,6 +131,51 @@
       },
       "limitacao_importante": "Nenhuma célula do estudo está a mais de 6,7 km de alguma mancha de floresta (a malha urbana de Manaus é pontilhada de fragmentos florestais) — não dá pra saber se/onde o efeito satura além disso. Não usar como 'raio de influência máximo comprovado'.",
       "nota_de_redacao": "Não afirmar '1 km² de verde melhora X% num raio de Y metros' — os dados não sustentam essa precisão (a relação com o tamanho da mancha não é significativa). Usar a forma testada e significativa: 'cada km de distância até a floresta custa ~0,4°C, mesmo entre áreas igualmente construídas' — e contrastar com o hotspot da Cidade Nova (~7 km de Ducke) como ilustração do extremo."
+    },
+    {
+      "id": "chuva_volume_anual",
+      "titulo": "O volume de chuva também caiu em Manaus",
+      "valor_absoluto": -131.0, "unidade_absoluta": "mm/ano (2001-12 -> 2013-25)",
+      "valor_percentual": -5.6, "unidade_percentual": "%",
+      "detalhe": { "media_2001_2012_mm": 2319.2, "media_2013_2025_mm": 2188.2 },
+      "como_foi_calculado": "CHIRPS v3 (produto PENTAD, nativo), reduzido sobre o bbox inteiro de Manaus (cidade + floresta ao redor, sem quebra por célula/zona — pixel de 5,5km é maior que boa parte da mancha urbana). Comparação por MÉDIA de metade da série contra a outra metade (2001-2012, n=12, vs. 2013-2025, n=13), não só os 5 primeiros/últimos anos — janela curta é sensível demais a um único ano de El Niño/La Niña.",
+      "validacao_cruzada": "ERA5-Land (reanálise independente, metodologia diferente do CHIRPS, série 1979-2025 restrita a partir de 1979 por confiabilidade — ver criterios_limpeza.json) mostra a mesma direção com magnitude maior: -4,3% na mesma técnica de metade-vs-metade (1979-2002 vs. 2003-2025).",
+      "nota_de_redacao": "Evitar comparar só os 5 anos iniciais com os 5 finais (2001-05 vs. 2021-25): essa janela mais curta é ruidosa e chega a mostrar alta de volume (+4,2%) por causa de anos específicos (2021 chuvoso, 2015 seco demais puxando a ponta inicial pra baixo). A tendência por regressão linear nos 25 anos inteiros (-2,6mm/ano) e a comparação de metades (-5,6%) concordam entre si — usar uma dessas duas, nunca o contraste de pontas isoladas."
+    },
+    {
+      "id": "chuva_dias_anual",
+      "titulo": "Manaus tem menos dias de chuva por ano do que tinha no início da série",
+      "valor_absoluto": -21.6, "unidade_absoluta": "dias/ano (2001-12 -> 2013-25)",
+      "valor_percentual": -9.1, "unidade_percentual": "%",
+      "detalhe": { "media_2001_2012_dias": 237.8, "media_2013_2025_dias": 216.2 },
+      "como_foi_calculado": "CHIRPS v3 (produto diário DAILY_SAT, derivado via satélite IMERG — mais incerto que o volume, que vem do produto pentadal nativo), limiar de 1mm/dia (padrão OMM), mesmo bbox e mesma técnica de metade-vs-metade do número de volume.",
+      "validacao_cruzada": "ERA5-Land (1979-2025) mostra a mesma direção com magnitude maior: -12,3% (metade-vs-metade). Esta é a série com o sinal de queda mais consistente entre as duas fontes independentes.",
+      "distribuicao_ao_longo_do_ano": {
+        "achado": "A queda NÃO está espalhada igual pelos 12 meses — concentra-se na estação seca (junho-outubro). Nos meses chuvosos (dezembro-maio) a queda é pequena, e no ERA5-Land alguns meses de volume (fevereiro, março, abril, dezembro) até subiram. Na estação seca, agosto perdeu 40% dos dias de chuva e 44% do volume no ERA5-Land (CHIRPS confirma a mesma direção, mais fraco: -10% dias, -7% volume).",
+        "leitura_recomendada": "Não escrever 'chove menos o ano todo' — a frase defensável é 'a estação seca ficou mais seca; a chuvosa está estável ou levemente mais forte'.",
+        "fonte_dos_numeros_mensais": "data/raw/precipitacao_mensal_era5_1979_2025.csv e data/processed/chuva_mensal.parquet, agrupados por mês de calendário, metade inicial vs. metade final de cada série."
+      },
+      "nota_de_redacao": "Mesma ressalva do número de volume: usar metade-vs-metade ou a tendência linear (-1,3 dias/ano no CHIRPS), nunca só os 5 anos iniciais contra os 5 finais."
+    },
+    {
+      "id": "chuva_julho",
+      "titulo": "Julho é o mês mais afetado pela queda de dias de chuva",
+      "valor_absoluto": -2.67, "unidade_absoluta": "dias de chuva em julho (2001-12 -> 2013-25)",
+      "valor_percentual": -18.9, "unidade_percentual": "% (arredondado pra -19% no site)",
+      "detalhe": { "media_2001_2012_dias": 14.15, "media_2013_2025_dias": 11.48 },
+      "como_foi_calculado": "CHIRPS v3, mesmo bbox e mesma técnica metade-vs-metade dos outros números de chuva do site, restrito ao mês de julho de cada ano. Julho é o mês com a MAIOR queda percentual de dias de chuva no CHIRPS (junho e setembro vêm logo depois, com -17,4% e -15,3%; agosto, apesar de ser o mês mais seco em volume absoluto, tem queda percentual mais modesta, -10,4%).",
+      "validacao_cruzada": "ERA5-Land (1979-2002 vs. 2003-2025) também tem julho entre os meses mais afetados: dias de chuva de 24,2 para 17,3 (-28,7%), volume de 150,2mm para 90,9mm (-39,5%). No ERA5-Land o mês com maior queda é agosto (-39,8% dias, -43,5% volume), não julho -- as duas fontes não concordam em qual mês exato é o pior, mas concordam que o trecho junho-setembro é o mais afetado.",
+      "nota_de_redacao": "Não usar 'agosto' como o mês mais castigado citando o CHIRPS -- nessa fonte quem lidera a queda percentual de dias de chuva é julho, não agosto (que só lidera no ERA5-Land). Escolher o mês em destaque de acordo com a fonte usada no big number, nunca misturar."
+    },
+    {
+      "id": "chuva_estacao_seca_jun_out",
+      "titulo": "A estação seca (junho a outubro) concentra a queda do ano inteiro",
+      "valor_absoluto": -10.3, "unidade_absoluta": "dias de chuva no período de 5 meses (2001-12 -> 2013-25)",
+      "valor_percentual": -14.1, "unidade_percentual": "%",
+      "detalhe": { "media_2001_2012_dias_no_periodo": 72.6, "media_2013_2025_dias_no_periodo": 62.3, "media_2001_2012_mm_no_periodo": 469.1, "media_2013_2025_mm_no_periodo": 455.4, "volume_valor_percentual": -2.9 },
+      "como_foi_calculado": "Soma de dias de chuva (e de mm) nos meses de junho a outubro de cada ano, CHIRPS v3, mesmo bbox do resto dos números de chuva do site; comparação por média de metade da série contra a outra metade.",
+      "validacao_cruzada": "ERA5-Land no mesmo período de 5 meses (1979-2002 vs. 2003-2025): dias de chuva -25,4%, volume -28,4% -- queda bem mais forte que no CHIRPS nos dois indicadores.",
+      "nota_de_redacao": "Ao contrário do número de agosto isolado, aqui o volume do CHIRPS já cai de forma visível (-2,9%) mesmo estando historicamente quase estável no agregado jun-set (ver achado em 'chuva_dias_anual') -- incluir outubro muda o resultado do volume."
     }
   ]
 }
