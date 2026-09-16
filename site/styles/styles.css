@@ -1,0 +1,1093 @@
+:root {
+    --ink: #2b2620;
+    --ink-soft: #5c5347;
+    --ink-mute: #847a6c;
+    --paper: #fbf8f1;
+    --paper-line: #e7e0d1;
+    --chart-green: #0E8A73;
+    --chart-red: #C1543A;
+    --chart-yellow: #C1A63A;
+    --h0: 130;
+    --h1: 105;
+    --h2: 70;
+    --h3: 45;
+    --h4: 30;
+    --h5: 22;
+    --h6: 15;
+    --h7: 9;
+    --h8: 4;
+    --h9: 0;
+    --wash-s: 38%;
+    --wash-l: 91%;
+    --accent-s: 46%;
+    --accent-l: 32%;
+    --a-0: hsl(var(--h0) var(--accent-s) var(--accent-l));
+    --a-1: hsl(var(--h1) var(--accent-s) var(--accent-l));
+    --a-2: hsl(var(--h2) var(--accent-s) var(--accent-l));
+    --a-3: hsl(var(--h3) var(--accent-s) var(--accent-l));
+    --a-4: hsl(var(--h4) var(--accent-s) var(--accent-l));
+    --a-5: hsl(var(--h5) var(--accent-s) var(--accent-l));
+    --a-6: hsl(var(--h6) var(--accent-s) var(--accent-l));
+    --a-7: hsl(var(--h7) var(--accent-s) var(--accent-l));
+    --a-8: hsl(var(--h8) var(--accent-s) var(--accent-l));
+    --shadow: 0 1px 2px rgba(43, 38, 32, .06), 0 6px 20px -8px rgba(43, 38, 32, .18);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --ink: #f1ece0;
+        --ink-soft: #c9c0ae;
+        --ink-mute: #93897a;
+        --paper: #242019;
+        --paper-line: #3a3327;
+        --chart-green: #249E87;
+        --chart-red: #DD6644;
+        --chart-yellow: #DDBE44;
+        --wash-s: 26%;
+        --wash-l: 15%;
+        --accent-s: 58%;
+        --accent-l: 68%;
+        --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 26px -10px rgba(0, 0, 0, .55);
+    }
+}
+
+:root[data-theme="dark"] {
+    --ink: #f1ece0;
+    --ink-soft: #c9c0ae;
+    --ink-mute: #93897a;
+    --paper: #242019;
+    --paper-line: #3a3327;
+    --chart-green: #249E87;
+    --chart-red: #DD6644;
+    --wash-s: 26%;
+    --wash-l: 15%;
+    --accent-s: 58%;
+    --accent-l: 68%;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 26px -10px rgba(0, 0, 0, .55);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    scroll-behavior: auto;
+}
+
+body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font-family: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+h1, h2, h3, .num {
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+    text-wrap: balance;
+}
+
+img {
+    max-width: 100%
+}
+
+.wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+    text-align: center;
+}
+
+@media (min-width: 640px) {
+    .wrap {
+        padding: 0 1.75rem;
+    }
+}
+
+h2 {
+    font-size: clamp(1.6rem, 5.5vw, 2.3rem);
+    font-weight: 600;
+    margin: 0 auto .8rem;
+    max-width: 26ch;
+}
+
+.dek {
+    color: var(--ink-soft);
+    max-width: 58ch;
+    margin: 0 auto 1.6rem;
+    font-size: 1.02rem;
+}
+
+section.block {
+    padding: 3.4rem 0;
+}
+/* ================= HERO SCROLL-DRIVEN ================= */
+
+.hero-scroll {
+    position: relative;
+    height: 450vh;
+    background: #111;
+}
+
+.hero-pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #111015;
+}
+
+#hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    filter: blur(3px);
+}
+
+.hero-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10, 9, 8, .15), rgba(10, 9, 8, .05) 40%, rgba(10, 9, 8, .35));
+    pointer-events: none;
+}
+
+.hero-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    text-align: center;
+    padding: max(2rem, env(safe-area-inset-top)) 1.4rem 0;
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    color: #f5f1e8;
+    font-size: clamp(1.15rem, 4.4vw, 1.7rem);
+    line-height: 1.25;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, .6), 0 1px 3px rgba(0, 0, 0, .65);
+    max-width: 20ch;
+    margin: 0 auto;
+}
+
+.hero-overlay {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #f5f1e8;
+    max-width: 92vw;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, .6), 0 1px 4px rgba(0, 0, 0, .65);
+}
+
+.hero-year {
+    font-weight: 700;
+    font-size: clamp(4.2rem, 20vw, 9rem);
+    line-height: .92;
+    font-variant-numeric: tabular-nums;
+    margin-block: 0;
+}
+
+.hero-temp {
+    margin-top: .6rem;
+    font-size: clamp(1.9rem, 8.5vw, 3.2rem);
+    font-variant-numeric: tabular-nums;
+    margin-block-end: 0;
+}
+
+.hero-temp b {
+    font-weight: 700;
+}
+
+.hero-temp-label {
+    display: block;
+    font-family: "Work Sans", sans-serif;
+    font-size: .66rem;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    opacity: .78;
+    margin-top: .5rem;
+}
+
+.hero-kicker {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1.6rem;
+    text-align: center;
+    font-size: .68rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #f5f1e8;
+    opacity: .65;
+    animation: bob 1.8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-kicker {
+        animation: none;
+    }
+}
+
+@keyframes bob {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(7px);
+    }
+}
+
+.hero-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, .14);
+    z-index: 3;
+}
+
+.hero-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #f5f1e8;
+}
+
+.thematic-break {
+    border: none;
+    border-top: calc(3 / 16 * 1rem) double currentColor;
+    color: currentColor;
+    overflow: visible;
+    text-align: center;
+    height: calc(5 / 16 * 1rem);
+    margin: 0;
+}
+
+.thematic-break::after {
+    content: "⁂";
+    font-size: 2rem;
+    padding: 0 calc(4 / 16 * 1rem);
+    position: relative;
+    top: -1.5rem;
+    background: inherit;
+}
+/* ================= SECTIONS — degrade continuo verde -> vermelho ================= */
+
+.sec-0 {
+    background: linear-gradient(180deg, hsl(var(--h0) var(--wash-s) var(--wash-l)), hsl(var(--h1) var(--wash-s) var(--wash-l)));
+}
+
+.sec-1 {
+    background: linear-gradient(180deg, hsl(var(--h1) var(--wash-s) var(--wash-l)), hsl(var(--h2) var(--wash-s) var(--wash-l)));
+}
+
+.sec-2 {
+    background: linear-gradient(180deg, hsl(var(--h2) var(--wash-s) var(--wash-l)), hsl(var(--h3) var(--wash-s) var(--wash-l)));
+}
+
+.sec-3 {
+    background: linear-gradient(180deg, hsl(var(--h3) var(--wash-s) var(--wash-l)), hsl(var(--h4) var(--wash-s) var(--wash-l)));
+}
+
+.sec-4 {
+    background: linear-gradient(180deg, hsl(var(--h4) var(--wash-s) var(--wash-l)), hsl(var(--h5) var(--wash-s) var(--wash-l)));
+}
+
+.sec-5 {
+    background: linear-gradient(180deg, hsl(var(--h5) var(--wash-s) var(--wash-l)), hsl(var(--h6) var(--wash-s) var(--wash-l)));
+}
+
+.sec-6 {
+    background: linear-gradient(180deg, hsl(var(--h6) var(--wash-s) var(--wash-l)), hsl(var(--h7) var(--wash-s) var(--wash-l)));
+}
+
+.sec-7 {
+    background: linear-gradient(180deg, hsl(var(--h7) var(--wash-s) var(--wash-l)), hsl(var(--h8) var(--wash-s) var(--wash-l)));
+}
+
+.sec-8 {
+    background: linear-gradient(180deg, hsl(var(--h8) var(--wash-s) var(--wash-l)), hsl(var(--h9) var(--wash-s) var(--wash-l)));
+}
+
+.sec-0 h2 {
+    color:var(--a-0)
+}
+
+.sec-1 h2 {
+    color:var(--a-1)
+}
+
+.sec-2 h2 {
+    color: var(--a-2)
+}
+
+.sec-3 h2 {
+    color:var(--a-3)
+}
+
+.sec-4 h2 {
+    color:var(--a-4)
+}
+
+.sec-5 h2 {
+    color: var(--a-5)
+}
+
+.sec-6 h2 {
+    color:var(--a-6)
+}
+
+.sec-7 h2 {
+    color:var(--a-7)
+}
+
+.sec-8 h2 {
+    color: var(--a-8)
+}
+
+.sec-6 .effect-icon {
+    color: var(--a-6)
+}
+/* ================= THERMOMETER BAR ================= */
+
+.therm {
+    margin: 4.6rem auto 0;
+    max-width: 420px;
+}
+
+.therm-track {
+    position: relative;
+    height: 30px;
+    border-radius: 15px;
+    background: linear-gradient(90deg, var(--chart-green), hsl(45 40% 80%), var(--chart-red));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.therm-pt {
+    position: absolute;
+    top: -3rem;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: .78rem;
+    color: var(--ink-soft);
+    white-space: nowrap;
+}
+
+.therm-pt-l {
+    transform: translateX(0);
+    text-align: left;
+}
+
+.therm-pt-r {
+    transform: translateX(-100%);
+    text-align: right;
+}
+
+.therm-pt b {
+    display: block;
+    font-family: "Fraunces", serif;
+    font-size: 1.15rem;
+    color: var(--ink);
+}
+
+.therm-dot {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    margin-left: -6px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+}
+
+.therm-diff {
+    color: #2b2620;
+}
+
+.therm-diff .num {
+    font-family: "Fraunces", serif;
+    font-size: clamp(.85rem, 2.6vw, 1.05rem);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.therm-temp {
+    display: block;
+    font-family: "Fraunces", serif;
+    font-size: 1.15rem;
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.therm-place {
+    display: block;
+}
+
+.therm-caption {
+    margin-block-start: 0.7em;
+    font-size: 80%;
+}
+/* ================= STAT TILES (sem fundo) ================= */
+
+.tiles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.2rem 3rem;
+    margin: 2rem auto;
+}
+
+.tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .25rem;
+    max-width: 250px;
+}
+
+.tile .label {
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .03em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+}
+
+.tile .num {
+    font-size: 2.4rem;
+    font-weight: 600;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.tile .cap {
+    font-size: .85rem;
+    color: var(--ink-soft);
+    margin-top: .2rem;
+}
+
+.tile.accent-1 .num {
+    color:var(--a-1)
+}
+
+.tile.accent-2 .num {
+    color: var(--a-2)
+}
+
+.tile.accent-3 .num {
+    color:var(--a-3)
+}
+
+.tile.accent-4 .num {
+    color: var(--a-4)
+}
+
+.tile.accent-5 .num {
+    color: var(--a-5)
+}
+
+.row2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.2rem 3rem;
+    margin-top: .15rem;
+}
+
+.note {
+    margin: 1.4rem auto 0;
+    max-width: 58ch;
+    font-size: .9rem;
+    color: var(--ink-soft);
+    font-style: italic;
+}
+
+.note strong {
+    color: var(--ink);
+    font-style: normal;
+}
+/* ================= BLOCO DE EFEITOS (iconizado) ================= */
+
+.effects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem 2.6rem;
+    margin: 2.2rem auto 0;
+    max-width: 640px;
+    text-align: left;
+}
+
+@media (min-width: 640px) {
+    .effects-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 639px) {
+    .effect {
+        align-items: center;
+        text-align: center;
+    }
+
+    .effect-icons {
+        justify-content: center;
+    }
+}
+
+.effect {
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+}
+
+.effect-icons {
+    display: flex;
+    gap: .5rem;
+}
+
+.effect-icon {
+    width: 2.6rem;
+    height: 2.6rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.effect-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.effect h3 {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 1.08rem;
+    margin: 0;
+    color: var(--ink);
+}
+
+.effect p {
+    margin: 0;
+    font-size: .88rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+}
+/* ================= CARROSSEL DE FOTOS ================= */
+
+.sec-7 .wrap {
+    max-width: unset;
+    padding: 0;
+}
+
+.carousel {
+    position: relative;
+    margin: 2.2rem auto 0;
+}
+
+.carousel-track {
+    --card-width: calc(620 / 16 * 1rem);
+    --card-width: clamp(320px, 75vw, calc(620 / 16 * 1rem));
+    --gap: 1.2rem;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-inline: calc(50% - var(--card-width) / 2);
+    padding-block-end: 0.75rem;
+    gap: var(--gap);
+}
+
+.carousel-slide {
+    flex: 0 0 100%;
+    max-width: var(--card-width);
+    scroll-snap-align: center;
+    margin: 0;
+}
+
+.carousel-slide img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+}
+
+.carousel-slide figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin-top: 0.7rem;
+    text-align: left;
+}
+
+.carousel-local {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 0.92rem;
+}
+
+.carousel-credito {
+    font-size: 0.72rem;
+    color: var(--ink-mute);
+}
+
+.chart-card {
+    margin: 1.8rem auto;
+    max-width: 620px;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .9s ease-out, transform .9s ease-out;
+}
+
+.chart-card.revelado {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.chart-card svg path {
+    transition: stroke-dashoffset 1.4s ease-out .15s;
+}
+
+.chart-card svg rect.bar-diverge {
+    transition: height .8s cubic-bezier(.22, .8, .25, 1), y .8s cubic-bezier(.22, .8, .25, 1);
+}
+
+.grafico-tooltip {
+    position: fixed;
+    pointer-events: none;
+    z-index: 40;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: "Work Sans", sans-serif;
+    font-size: .78rem;
+    padding: .4rem .65rem;
+    border-radius: 6px;
+    white-space: nowrap;
+    transform: translate(-50%, -120%);
+    opacity: 0;
+    transition: opacity .12s ease;
+    font-variant-numeric: tabular-nums;
+}
+
+.grafico-tooltip.mostrar {
+    opacity: 1;
+}
+
+.grafico-tooltip b {
+    font-family: "Fraunces", serif;
+    display: block;
+}
+/* pontos/barras com tooltip: sem callout nem seleção de texto no toque
+     longo -- é exatamente esse callout do navegador que atrapalhava no
+     mobile antes desta correção. */
+
+.pt-dado {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.chart-card h3 {
+    margin: 0 0 .15rem;
+    font-size: 1.08rem;
+    font-weight: 600;
+}
+
+.chart-card .chart-sub {
+    font-size: .82rem;
+    color: var(--ink-mute);
+    margin: 0 0 .9rem;
+}
+
+.chart-card svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+}
+
+.chart-card canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 6px;
+}
+
+.chart-card .axis {
+    font-family: "Work Sans", sans-serif;
+    font-size: 10.5px;
+    fill: var(--ink);
+}
+
+.chart-card .gridline {
+    stroke: var(--paper-line);
+    stroke-width: 1;
+}
+
+.legend {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: .6rem;
+    font-size: .8rem;
+    color: var(--ink-soft);
+}
+
+.legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: .4em;
+}
+
+.heatmap-legend {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    margin-top: 1.7rem;
+    font-size: .78rem;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+}
+
+.heatmap-legend-bar-wrap {
+    position: relative;
+    flex: 1;
+}
+
+.chart-card .heatmap-legend-bar {
+    flex: 1;
+    height: 10px !important;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+}
+
+.heatmap-legend-mark {
+    position: absolute;
+    top: -1.3rem;
+    transform: translateX(-50%);
+    font-size: .68rem;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--ink-mute);
+}
+
+.heatmap-legend-mark::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 1.05rem;
+    width: 1px;
+    height: 14px;
+    background: var(--ink-mute);
+    opacity: .6;
+    transform: translateX(-50%);
+}
+
+.heatmap-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 51/40;
+    border-radius: 6px;
+}
+
+.heatmap-wrap:focus-visible {
+    box-shadow: 0 0 0 2px var(--a-3);
+}
+
+.chart-card .heatmap-wrap canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.heatmap-labels {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.heatmap-label {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    white-space: nowrap;
+    font-family: "Work Sans", sans-serif;
+    font-size: .7rem;
+    font-weight: 600;
+    color: #f5f1e8;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, .7), 0 0 3px rgba(0, 0, 0, .9);
+    padding-bottom: 6px;
+}
+
+.heatmap-label::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 5px;
+    height: 5px;
+    margin-left: -2.5px;
+    border-radius: 50%;
+    background: #f5f1e8;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .8);
+}
+
+.swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    display: inline-block;
+}
+/* ================= CITAÇÕES: marcador clicável + overlay com a fonte ================= */
+
+body {
+    counter-reset: citing;
+}
+
+.cite {
+    display: inline;
+    vertical-align: top;
+    position: relative;
+    top: -.2em;
+    line-height: 1;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0 1px;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 700;
+    opacity: .8;
+    transition: opacity .15s, color .15s;
+    font-size: calc(12.8 / 16 * 1rem);
+    color: inherit;
+}
+
+.cite:hover, .cite:focus-visible {
+    opacity: 1;
+    color: var(--a-3);
+}
+
+.cite::before {
+    counter-increment: citing;
+    content: "[" counter(citing) "]";
+}
+
+.cite-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem;
+}
+
+.cite-overlay.visivel {
+    display: flex;
+}
+
+.cite-overlay-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 9, 7, .6);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+
+.cite-card {
+    position: relative;
+    max-width: 440px;
+    width: 100%;
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 12px;
+    padding: 1.6rem 1.7rem 1.8rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .4);
+    opacity: 0;
+    transform: translateY(10px) scale(.98);
+    transition: opacity .2s ease, transform .2s ease;
+}
+
+.cite-overlay.aberto .cite-overlay-backdrop {
+    opacity: 1;
+}
+
+.cite-overlay.aberto .cite-card {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.cite-close {
+    position: absolute;
+    top: .9rem;
+    right: .9rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: var(--paper-line);
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.cite-close:hover {
+    background: var(--ink-mute);
+    color: var(--paper);
+}
+
+.cite-tipo {
+    font-family: "Work Sans", sans-serif;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--a-3);
+    margin-bottom: .4rem;
+}
+
+.cite-card h4 {
+    font-family: "Fraunces", serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 .6rem;
+    line-height: 1.3;
+    padding-right: 1.5rem;
+}
+
+.cite-card p {
+    font-size: .9rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin: 0;
+}
+
+.cite-card a.cite-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .35em;
+    margin-top: 1rem;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--a-3);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+}
+
+.cite-card a.cite-link[hidden] {
+    display: none;
+}
+
+.cite-card a.cite-link::after {
+    content: "→";
+}
+/* ================= QUESTIONS: sanfona, colapsada por padrao ================= */
+
+.qlist {
+    display: flex;
+    flex-direction: column;
+    margin: 1.8rem auto 0;
+    max-width: 56ch;
+}
+
+.qcard {
+    border-bottom: 1px solid var(--paper-line);
+    padding: 1.1rem 0;
+}
+
+.qcard summary {
+    list-style: none;
+    cursor: pointer;
+    position: relative;
+    padding: 0 2.2rem;
+    font-size: 1.1rem;
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.qcard summary::-webkit-details-marker {
+    display: none;
+}
+
+.qcard summary::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    top: .05em;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--a-5);
+    transition: transform .25s ease;
+}
+
+.qcard[open] summary::after {
+    transform: rotate(45deg);
+}
+
+.qcard p {
+    margin: .9rem 0 0;
+    padding: 0 2.2rem;
+    color: var(--ink-soft);
+    font-size: .94rem;
+}
+
+footer {
+    background: hsl(var(--h9) var(--wash-s) var(--wash-l));
+    padding: 2.4rem 0 3rem;
+}
+
+footer .cols {
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+    font-size: .9rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    text-align: center;
+}
+
+footer .cols > div {
+    max-width: 58ch;
+    margin: 0 auto;
+}
+
+footer h4 {
+    font-size: .74rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin: 0 0 .6rem;
+    font-family: "Work Sans", sans-serif;
+}
+
+a {
+    color: inherit;
+}
