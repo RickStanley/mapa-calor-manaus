@@ -874,10 +874,6 @@ section.block {
 }
 /* ================= CITAÇÕES ================= */
 
-body {
-    counter-reset: citing;
-}
-
 .cite {
     display: inline;
     vertical-align: top;
