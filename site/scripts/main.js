@@ -227,16 +227,29 @@
   }
 
   // ================= HERO: mapa de calor em canvas, dirigido pelo scroll =================
-  const heatMapResponse = await fetch("/resources/hero-heatmap.json");
-  const HEAT = await heatMapResponse.json();
-  
+  // HEAT alimenta tanto o hero quanto o mapa interativo de ilhas de calor
+  // mais abaixo -- por isso o try/catch aqui, não em cada um dos dois: se
+  // essa busca falhar (rede instável, ou abrir index.html direto via
+  // file:// em vez de servidor local, que bloqueia fetch de arquivo),
+  // HEAT vira null e cada um dos dois blocos que dependem dele sai cedo
+  // (guarda `if(!HEAT) return`), sem travar o resto do script (halo,
+  // hotspot, chuva, scatter continuam funcionando normalmente).
+  let HEAT = null;
+  try {
+    const heatMapResponse = await fetch("/resources/hero-heatmap.json");
+    if(!heatMapResponse.ok) throw new Error(`HTTP ${heatMapResponse.status}`);
+    HEAT = await heatMapResponse.json();
+  } catch(erro){
+    console.error('Não consegui carregar hero-heatmap.json -- hero e mapa de ilhas de calor ficam desativados nesta carga:', erro);
+  }
+
     (function(){
     const wrap = document.getElementById('hero-scroll');
     const canvas = document.getElementById('hero-canvas');
     const yearEl = document.getElementById('hero-year');
     const tempEl = document.getElementById('hero-temp-num');
     const barEl = document.getElementById('hero-progress-bar');
-    if(!wrap || !canvas) return;
+    if(!wrap || !canvas || !HEAT) return;
 
     const ctx = canvas.getContext('2d');
     const NROW = HEAT.nrow, NCOL = HEAT.ncol;
@@ -574,7 +587,7 @@
   (function(){
     const wrap = document.getElementById('heatmap-wrap');
     const canvas = document.getElementById('chart-heatmap');
-    if(!wrap || !canvas) return;
+    if(!wrap || !canvas || !HEAT) return;
     const ctx = canvas.getContext('2d');
     const labelsLayer = document.getElementById('heatmap-labels');
 
@@ -801,8 +814,15 @@
   (async function(){
     const svg = document.getElementById('chart-scatter');
     if(!svg) return;
-    const vegetationDataResponse = await fetch("/resources/vegetation.json");
-    const pts = await vegetationDataResponse.json();
+    let pts;
+    try {
+      const vegetationDataResponse = await fetch("/resources/vegetation.json");
+      if(!vegetationDataResponse.ok) throw new Error(`HTTP ${vegetationDataResponse.status}`);
+      pts = await vegetationDataResponse.json();
+    } catch(erro){
+      console.error('Não consegui carregar vegetation.json -- gráfico de dispersão fica vazio nesta carga:', erro);
+      return;
+    }
     const corr = {"n": 1773, "slope": -0.01256, "intercept": 0.9008, "r2": 0.057, "r": -0.2387, "x_min": -79.2, "x_max": 104.2, "grupo_perdeu": {"n": 767, "media_lst_var": 1.091}, "grupo_manteve": {"n": 1006, "media_lst_var": 0.788}};
     const W=700,H=320, pad={l:44,r:14,t:14,b:34};
     const CLIP=50;
@@ -851,6 +871,49 @@
         pontos.forEach(c => { c.style.opacity = '.4'; });
       });
     });
+  })();
+
+  // ================= carrossel: arrastar com o mouse no desktop =================
+  // overflow-x:auto já dá scroll por trackpad/barra de rolagem, mas clicar
+  // e arrastar com o mouse não move um scroll container por padrão --
+  // precisa de JS. Só ativa pra ponteiro tipo mouse: toque já tem scroll
+  // nativo por gesto, arrastar com um dedo faria o gesto ser capturado
+  // duas vezes.
+  (function(){
+    const track = document.getElementById('carousel-track');
+    if(!track) return;
+
+    let arrastando = false, comecouX = 0, scrollInicial = 0;
+
+    track.addEventListener('pointerdown', (e) => {
+      if(e.pointerType !== 'mouse') return;
+      arrastando = true;
+      comecouX = e.clientX;
+      scrollInicial = track.scrollLeft;
+      track.style.scrollSnapType = 'none'; // solta o snap durante o arrasto, senão o navegador briga com o movimento
+      // user-select:none só enquanto arrasta -- fora disso, o crédito da
+      // foto (figcaption, incluindo atribuição CC BY) precisa continuar
+      // selecionável normalmente.
+      track.classList.add('arrastando');
+      track.setPointerCapture(e.pointerId);
+    });
+    track.addEventListener('pointermove', (e) => {
+      if(!arrastando) return;
+      track.scrollLeft = scrollInicial - (e.clientX - comecouX);
+    });
+    function soltar(){
+      if(!arrastando) return;
+      arrastando = false;
+      track.style.scrollSnapType = '';
+      track.classList.remove('arrastando');
+    }
+    track.addEventListener('pointerup', soltar);
+    track.addEventListener('pointercancel', soltar);
+
+    // sem isso, soltar o botão do mouse em cima de uma foto dispara o
+    // "arrastar imagem" nativo do navegador (ghost da imagem seguindo o
+    // cursor), que atrapalha o gesto de arrastar o carrossel inteiro.
+    track.querySelectorAll('img').forEach(img => img.setAttribute('draggable', 'false'));
   })();
 
 })();

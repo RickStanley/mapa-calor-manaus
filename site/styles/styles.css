@@ -591,11 +591,6 @@ section.block {
 }
 /* ================= CARROSSEL DE FOTOS ================= */
 
-.sec-7 .wrap {
-    max-width: unset;
-    padding: 0;
-}
-
 .carousel {
     position: relative;
     margin: 2.2rem auto 0;
@@ -611,6 +606,16 @@ section.block {
     padding-inline: calc(50% - var(--card-width) / 2);
     padding-block-end: 0.75rem;
     gap: var(--gap);
+    cursor: grab;
+}
+
+.carousel-track.arrastando {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.carousel-track:active {
+    cursor: grabbing;
 }
 
 .carousel-slide {
