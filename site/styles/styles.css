@@ -17,6 +17,7 @@
     --h7: 9;
     --h8: 4;
     --h9: 0;
+    --h10: 0;
     --wash-s: 38%;
     --wash-l: 91%;
     --accent-s: 46%;
@@ -30,6 +31,7 @@
     --a-6: hsl(var(--h6) var(--accent-s) var(--accent-l));
     --a-7: hsl(var(--h7) var(--accent-s) var(--accent-l));
     --a-8: hsl(var(--h8) var(--accent-s) var(--accent-l));
+    --a-9: hsl(var(--h9) var(--accent-s) var(--accent-l));
     --shadow: 0 1px 2px rgba(43, 38, 32, .06), 0 6px 20px -8px rgba(43, 38, 32, .18);
 }
 
@@ -321,6 +323,14 @@ section.block {
     background: linear-gradient(180deg, hsl(var(--h8) var(--wash-s) var(--wash-l)), hsl(var(--h9) var(--wash-s) var(--wash-l)));
 }
 
+.sec-9 {
+    background: linear-gradient(
+        180deg,
+        hsl(var(--h9) var(--wash-s) var(--wash-l)),
+        hsl(var(--h10) var(--wash-s) var(--wash-l))
+    );
+}
+
 .sec-0 h2 {
     color:var(--a-0)
 }
@@ -355,6 +365,10 @@ section.block {
 
 .sec-8 h2 {
     color: var(--a-8)
+}
+
+.sec-9 h2 {
+    color: var(--a-9);
 }
 
 .sec-6 .effect-icon {
@@ -863,11 +877,7 @@ section.block {
     border-radius: 3px;
     display: inline-block;
 }
-/* ================= CITAÇÕES: marcador clicável + overlay com a fonte ================= */
-
-body {
-    counter-reset: citing;
-}
+/* ================= CITAÇÕES ================= */
 
 .cite {
     display: inline;
@@ -885,6 +895,7 @@ body {
     transition: opacity .15s, color .15s;
     font-size: calc(12.8 / 16 * 1rem);
     color: inherit;
+    text-decoration: none;
 }
 
 .cite:hover, .cite:focus-visible {
@@ -892,91 +903,22 @@ body {
     color: var(--a-3);
 }
 
-.cite::before {
-    counter-increment: citing;
-    content: "[" counter(citing) "]";
-}
-
-.cite-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 50;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 1.2rem;
-}
-
-.cite-overlay.visivel {
-    display: flex;
-}
-
-.cite-overlay-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(10, 9, 7, .6);
-    backdrop-filter: blur(2px);
-    opacity: 0;
-    transition: opacity .2s ease;
-}
-
-.cite-card {
-    position: relative;
-    max-width: 440px;
-    width: 100%;
-    background: var(--paper);
-    color: var(--ink);
-    border-radius: 12px;
-    padding: 1.6rem 1.7rem 1.8rem;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, .4);
-    opacity: 0;
-    transform: translateY(10px) scale(.98);
-    transition: opacity .2s ease, transform .2s ease;
-}
-
-.cite-overlay.aberto .cite-overlay-backdrop {
-    opacity: 1;
-}
-
-.cite-overlay.aberto .cite-card {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-}
-
-.cite-close {
-    position: absolute;
-    top: .9rem;
-    right: .9rem;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    border: none;
-    background: var(--paper-line);
-    color: var(--ink-soft);
-    font-size: 1.1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-}
-
-.cite-close:hover {
-    background: var(--ink-mute);
-    color: var(--paper);
-}
-
-.cite-tipo {
+.notes .note-type {
     font-family: "Work Sans", sans-serif;
     font-size: .7rem;
     font-weight: 700;
     letter-spacing: .07em;
     text-transform: uppercase;
     color: var(--a-3);
-    margin-bottom: .4rem;
 }
 
-.cite-card h4 {
+.notes footer {
+    all: revert;
+    margin: 0.5rem 0 3rem;
+    background: none;
+}
+
+.notes h3 {
     font-family: "Fraunces", serif;
     font-size: 1.15rem;
     font-weight: 600;
@@ -985,32 +927,13 @@ body {
     padding-right: 1.5rem;
 }
 
-.cite-card p {
+
+.notes p {
     font-size: .9rem;
     color: var(--ink-soft);
     line-height: 1.55;
-    margin: 0;
 }
 
-.cite-card a.cite-link {
-    display: inline-flex;
-    align-items: center;
-    gap: .35em;
-    margin-top: 1rem;
-    font-size: .85rem;
-    font-weight: 600;
-    color: var(--a-3);
-    text-decoration: none;
-    border-bottom: 1px solid currentColor;
-}
-
-.cite-card a.cite-link[hidden] {
-    display: none;
-}
-
-.cite-card a.cite-link::after {
-    content: "→";
-}
 /* ================= QUESTIONS: sanfona, colapsada por padrao ================= */
 
 .qlist {

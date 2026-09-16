@@ -43,12 +43,13 @@
         <b id="hero-temp-num">32,6</b> °C
         <span class="hero-temp-label">
             Temperatura máxima média na superfície da cidade
-            <button
-                type="button"
+            <a
+                href="#nota-temp-maxima"
+                id="referencia-temp-maxima"
                 class="cite on-dark"
-                data-cite="temp-maxima"
                 aria-label="Ver fonte deste dado">
-            </button>
+                <span aria-hidden="true">[1]</span>
+            </a>
         </span>
       </p>
     </div>
@@ -91,12 +92,13 @@
             <output class="therm-diff" aria-label="Diferença de temperatura">
                 <data class="num" value="8.8">+8,8 °C</data>
 
-                <button
-                    type="button"
+                <a
                     class="cite"
-                    data-cite="amplitude-termica"
+                    href="#nota-amplitude-termica"
+                    id="referencia-amplitude-termica"
                     aria-label="Ver fonte da diferença de temperatura">
-                </button>
+                    <span aria-hidden="true">[2]</span>
+                </a>
             </output>
         </div>
 
@@ -123,7 +125,7 @@
     <div class="tiles">
       <div class="tile accent-2">
         <span class="label">Custo por km</span>
-        <span class="num">+0,38°C<button type="button" class="cite" data-cite="halo-floresta" aria-label="Ver fonte deste dado"></button></span>
+        <span class="num">+0,38°C<a class="cite" href="#nota-halo-floresta" aria-label="Ver fonte deste dado" id="referencia-halo-floresta"><span aria-hidden>[3]</span></a></span>
         <span class="cap">Isolando as 214 células já urbanizadas. Estatisticamente significativo.</span>
       </div>
       <div class="tile accent-2">
@@ -142,7 +144,7 @@
     <p class="dek">A maior parte da mancha urbana de Manaus já estava consolidada em 2001. Não sobrava vegetação pra perder ali. Mas existe um recorte de espaço e de tempo onde dá pra ver os dois efeitos juntos: Cidade Nova, na divisa entre a cidade e a floresta.</p>
 
     <div class="chart-card">
-      <h3>Cidade Nova: vegetação x temperatura<button type="button" class="cite" data-cite="hotspot-cidade-nova" aria-label="Ver fonte deste dado"></button></h3>
+      <h3>Cidade Nova: vegetação x temperatura<a class="cite" href="#nota-hotspot-cidade-nova" id="referencia-hotspot-cidade-nova" aria-label="Ver fonte deste dado"><span aria-hidden>[4]</span></a></h3>
       <p class="chart-sub">variação % em relação à média de 2001–05 · eixo verde (esquerda) é NDVI, o índice de vegetação calculado por satélite, eixo vermelho (direita) é LST, a temperatura da superfície captada por satélite (diferente da temperatura do ar), cada um na própria escala</p>
       <svg id="chart-hotspot" viewBox="0 0 700 320" role="img" aria-label="NDVI caindo e temperatura subindo em Cidade Nova, 2001 a 2025, cada série na própria escala"></svg>
       <p class="note" style="margin-top:.8rem;font-size:.78rem">Eixo duplo: as duas linhas usam escalas diferentes (cada uma com o próprio máximo, para cima e para baixo), não a mesma régua. Os dois 0% ficam alinhados na grade do meio, então olhe a cor de cada eixo antes de comparar os números.</p>
@@ -165,7 +167,7 @@
     <p class="dek">Ilha de calor urbana não é força de expressão, é um fenômeno físico bem documentado: asfalto e concreto absorvem radiação solar de dia e devolvem esse calor pro ar durante mais tempo que solo ou vegetação. Sem árvore, não tem evapotranspiração pra resfriar o entorno. Prédios colados uns nos outros bloqueiam o vento que ajudaria a dissipar o calor acumulado. Resultado: a cidade não tem tempo de esfriar antes do sol da próxima manhã.</p>
 
     <div class="chart-card">
-      <h3>Manaus em 2025, célula a célula<button type="button" class="cite" data-cite="mapa-2025" aria-label="Ver fonte deste dado"></button></h3>
+      <h3>Manaus em 2025, célula a célula<a class="cite" href="#nota-mapa-2025" id="referencia-mapa-2025" aria-label="Ver fonte deste dado"><span aria-hidden>[5]</span></a></h3>
       <div class="heatmap-wrap" id="heatmap-wrap" tabindex="0" role="application">
         <canvas id="chart-heatmap" role="img" aria-label="Mapa da grade de Manaus em 2025: células mais quentes em vermelho, mais frias em verde"></canvas>
         <div class="heatmap-labels" id="heatmap-labels"></div>
@@ -186,7 +188,7 @@
 
 <section class="block sec-4">
   <div class="wrap">
-    <h2>Menos 57 km² de sombra<button type="button" class="cite" data-cite="57km2" aria-label="Ver fonte deste dado"></button></h2>
+    <h2>Menos 57 km² de sombra<a class="cite" href="#nota-57km2" id="referencia-57km2" aria-label="Ver fonte deste dado"><span aria-hidden>[6]</span></a></h2>
     <p class="dek">Em termos futebolísticos: são quase 8.000 campos de futebol. São 57 km² de Manaus deixaram de ser considerados verdes entre o início e o fim da série (2001 a 2025). É quase o tamanho da própria Reserva Adolpho Ducke: uma reserva inteira perdida em pedaços pela cidade, em apenas uma geração.</p>
 
     <div class="chart-card">
@@ -194,7 +196,7 @@
       <p class="chart-sub">variação de NDVI, o índice de vegetação por satélite (%), vs. variação de temperatura diurna de superfície (°C) · eixo recortado em ±50% para legibilidade</p>
       <svg id="chart-scatter" viewBox="0 0 700 320" role="img" aria-label="Dispersão entre variação de NDVI e variação de temperatura por célula"></svg>
       <div class="legend">
-        <span><i class="swatch" style="background:var(--chart-red)"></i>perdeu vegetação (43%)<button type="button" class="cite" data-cite="correlacao-grupo" aria-label="Ver fonte deste dado"></button></span>
+        <span><i class="swatch" style="background:var(--chart-red)"></i>perdeu vegetação (43%)<a class="cite" href="#nota-correlacao-grupo" id="referencia-correlacao-grupo" aria-label="Ver fonte deste dado"><span aria-hidden>[7]</span></a></span>
         <span><i class="swatch" style="background:var(--chart-green)"></i>manteve/ganhou (57%)</span>
       </div>
     </div>
@@ -211,12 +213,12 @@
     <div class="row2">
       <div class="tile accent-5">
         <span class="label">Volume anual</span>
-        <span class="num" style="font-size:1.9rem">−5,6%<button type="button" class="cite" data-cite="chuva-volume" aria-label="Ver fonte deste dado"></button></span>
+        <span class="num" style="font-size:1.9rem">−5,6%<a class="cite" href="#nota-chuva-volume" id="referencia-chuva-volume-1" aria-label="Ver fonte deste dado"><span aria-hidden>[8]</span></a></span>
         <span class="cap">De 2.319mm/ano (2001–12) para 2.188mm/ano (2013–25).</span>
       </div>
       <div class="tile accent-5">
         <span class="label">Dias de chuva</span>
-        <span class="num" style="font-size:1.9rem">−9,1%<button type="button" class="cite" data-cite="chuva-dias" aria-label="Ver fonte deste dado"></button></span>
+        <span class="num" style="font-size:1.9rem">−9,1%<a class="cite" href="#nota-chuva-dias" id="referencia-chuva-dias" aria-label="Ver fonte deste dado"><span aria-hidden>[9]</span></a></span>
         <span class="cap">De 237,8 dias/ano (2001–12) para 216,2 dias/ano (2013–25).</span>
       </div>
     </div>
@@ -226,30 +228,30 @@
     <div class="row2">
       <div class="tile accent-5">
         <span class="label">Julho</span>
-        <span class="num" style="font-size:1.9rem">−19%<button type="button" class="cite" data-cite="chuva-julho" aria-label="Ver fonte deste dado"></button></span>
+        <span class="num" style="font-size:1.9rem">−19%<a class="cite" href="#nota-chuva-julho" id="referencia-chuva-julho" aria-label="Ver fonte deste dado"><span aria-hidden>[10]</span></a></span>
         <span class="cap">Dias de chuva no mês: de 14,2 (2001–12) para 11,5 (2013–25). Numa segunda fonte independente (ERA5-Land), a queda chega a 29%.</span>
       </div>
       <div class="tile accent-5">
         <span class="label">Estação seca (jun–out)</span>
-        <span class="num" style="font-size:1.9rem">−14%<button type="button" class="cite" data-cite="chuva-estacao-seca" aria-label="Ver fonte deste dado"></button></span>
+        <span class="num" style="font-size:1.9rem">−14%<a class="cite" href="#nota-chuva-estacao-seca" id="referencia-chuva-estacao-seca" aria-label="Ver fonte deste dado"><span aria-hidden>[11]</span></a></span>
         <span class="cap">Dias de chuva no período: de 72,6 (2001–12) para 62,3 (2013–25). Na mesma segunda fonte, a queda chega a 25%.</span>
       </div>
     </div>
 
     <div class="chart-card">
-      <h3>Volume de chuva, mês a mês<button type="button" class="cite" data-cite="chuva-volume" aria-label="Ver fonte deste dado"></button></h3>
+      <h3>Volume de chuva, mês a mês<a class="cite" href="#nota-chuva-volume" id="referencia-chuva-volume-2" aria-label="Ver fonte deste dado"><span aria-hidden>[12]</span></a></h3>
       <p class="chart-sub">variação % entre 2001–12 e 2013–25, mesmo mês do calendário, pra Manaus inteira (cidade e floresta ao redor, sem separar por bairro). Quanto mais perto do vermelho, maior a queda; toque ou passe o mouse pra ver o número exato</p>
       <svg id="chart-chuva-volume" viewBox="0 0 700 280" role="img" aria-label="Variação percentual do volume de chuva por mês entre os dois períodos, com queda concentrada na estação seca"></svg>
     </div>
 
     <div class="chart-card">
-      <h3>Dias de chuva, mês a mês<button type="button" class="cite" data-cite="chuva-dias" aria-label="Ver fonte deste dado"></button></h3>
+      <h3>Dias de chuva, mês a mês<a class="cite" href="#nota-chuva-dias" id="referencia-chuva-dias" aria-label="Ver fonte deste dado"><span aria-hidden>[13]</span></a></h3>
       <p class="chart-sub">variação % entre 2001–12 e 2013–25, mesmo mês do calendário, pra Manaus inteira. Toque ou passe o mouse pra ver o número exato</p>
       <svg id="chart-chuva-dias" viewBox="0 0 700 280" role="img" aria-label="Variação percentual dos dias de chuva por mês entre os dois períodos, com queda concentrada na estação seca"></svg>
       <p class="note" style="margin-top:.8rem;font-size:.78rem">Dezembro a maio praticamente não mudou. A queda inteira do ano está concentrada nos meses secos.</p>
     </div>
 
-    <p class="dek" style="margin-top:2.4rem">O mecanismo físico é o mesmo já documentado no resto deste site. Menos árvore significa menos evapotranspiração, o vapor d'água que a vegetação libera e que ajuda a puxar chuva de volta pra região. Uma torre de medição instalada no bairro Petrópolis em 2022 mostra isso na prática: na estação seca, a floresta da Reserva Ducke manda 75% da energia disponível pra evapotranspiração, enquanto a área urbana de Manaus manda só 37%. O resto vira calor seco, não vapor d'água.<button type="button" class="cite" data-cite="chuva-torre-petropolis" aria-label="Ver fonte deste dado"></button></p>
+    <p class="dek" style="margin-top:2.4rem">O mecanismo físico é o mesmo já documentado no resto deste site. Menos árvore significa menos evapotranspiração, o vapor d'água que a vegetação libera e que ajuda a puxar chuva de volta pra região. Uma torre de medição instalada no bairro Petrópolis em 2022 mostra isso na prática: na estação seca, a floresta da Reserva Ducke manda 75% da energia disponível pra evapotranspiração, enquanto a área urbana de Manaus manda só 37%. O resto vira calor seco, não vapor d'água.<a class="cite" href="#nota-chuva-torre-petropolis" id="referencia-chuva-torre-petropolis" aria-label="Ver fonte deste dado"><span aria-hidden>[14]</span></a></p>
 
     <div class="note">Esses números são uma média pra Manaus inteira. É esperado que o efeito seja ainda mais forte nas faixas de maior densidade urbana, com mais concreto, mais asfalto e mais prédio e menos árvore, do que essa média sozinha consegue mostrar. Medir isso com precisão exigiria uma fonte de dado com resolução mais fina do que qualquer satélite de chuva disponível hoje.</div>
   </div>
@@ -266,7 +268,7 @@
           <span class="effect-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></span>
         </div>
         <h3>Saúde</h3>
-        <p>Noite quente atrapalha o sono e sobrecarrega o coração: risco cardiovascular sobe com o calor extremo.<button type="button" class="cite" data-cite="calor-saude" aria-label="Ver fonte deste dado"></button></p>
+        <p>Noite quente atrapalha o sono e sobrecarrega o coração: risco cardiovascular sobe com o calor extremo.<a class="cite" href="#nota-calor-saude" id="referencia-calor-saude" aria-label="Ver fonte deste dado"><span aria-hidden>[15]</span></a></p>
       </div>
 
       <div class="effect">
@@ -275,7 +277,7 @@
           <span class="effect-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg></span>
         </div>
         <h3>Recursos</h3>
-        <p>Manaus já bateu recorde de consumo de energia em dia de calor, e sem luz o tratamento de água também para.<button type="button" class="cite" data-cite="calor-recursos" aria-label="Ver fonte deste dado"></button></p>
+        <p>Manaus já bateu recorde de consumo de energia em dia de calor, e sem luz o tratamento de água também para.<a class="cite" href="#nota-calor-recursos" id="referencia-calor-recursos" aria-label="Ver fonte deste dado"><span aria-hidden>[16]</span></a></p>
       </div>
 
       <div class="effect">
@@ -284,7 +286,7 @@
           <span class="effect-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg></span>
         </div>
         <h3>Finanças</h3>
-        <p>Manaus já paga a energia mais cara do Brasil (R$1,07 o kWh), e o calor extremo empurra a conta ainda mais.<button type="button" class="cite" data-cite="calor-financas" aria-label="Ver fonte deste dado"></button></p>
+        <p>Manaus já paga a energia mais cara do Brasil (R$1,07 o kWh), e o calor extremo empurra a conta ainda mais.<a class="cite" href="#nota-calor-financas" id="referencia-calor-financas" aria-label="Ver fonte deste dado"><span aria-hidden>[17]</span></a></p>
       </div>
 
       <div class="effect">
@@ -292,7 +294,7 @@
           <span class="effect-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M8 19v1"/><path d="M8 14v1"/><path d="M16 19v1"/><path d="M16 14v1"/><path d="M12 21v1"/><path d="M12 16v1"/></svg></span>
         </div>
         <h3>Ambiente</h3>
-        <p>Menos floresta, menos chuva: a própria Manaus já tem menos dias de chuva por ano que no início da série.<button type="button" class="cite" data-cite="calor-ambiente" aria-label="Ver fonte deste dado"></button> <a href="#chuva" style="color:inherit;text-decoration:underline">Ver os dados</a>.</p>
+        <p>Menos floresta, menos chuva: a própria Manaus já tem menos dias de chuva por ano que no início da série.<a class="cite" href="#nota-calor-ambiente" id="referencia-calor-ambiente" aria-label="Ver fonte deste dado"><span aria-hidden>[18]</span></a> <a href="#chuva" style="color:inherit;text-decoration:underline">Ver os dados</a>.</p>
       </div>
     </div>
   </div>
@@ -337,11 +339,11 @@
     <div class="qlist">
       <details class="qcard">
         <summary>Ainda dá tempo ou já cruzamos o ponto de não retorno?</summary>
-        <p>O maior efeito de vegetação e calor que encontramos está numa área de expansão recente (Cidade Nova)<button type="button" class="cite" data-cite="hotspot-cidade-nova" aria-label="Ver fonte deste dado"></button>. Conter o avanço da cidade sobre a floresta hoje ainda muda o resultado daqui a 20 anos, ou o padrão já está definido demais pra frear? Pro resto do planeta, já sabemos<button type="button" class="cite" data-cite="pbs-15c" aria-label="Ver fonte desta informação"></button> que 1,5°C já é uma realidade, e agora temos que nos planejar pra <strong>reduzir</strong> os impactos.</p>
+        <p>O maior efeito de vegetação e calor que encontramos está numa área de expansão recente (Cidade Nova)<a class="cite" href="#nota-hotspot-cidade-nova" id="referencia-hotspot-cidade-nova" aria-label="Ver fonte deste dado"><span aria-hidden>[19]</span></a>. Conter o avanço da cidade sobre a floresta hoje ainda muda o resultado daqui a 20 anos, ou o padrão já está definido demais pra frear? Pro resto do planeta, já sabemos<a class="cite" href="#nota-pbs-15c" id="referencia-pbs-15c" aria-label="Ver fonte desta informação"><span aria-hidden>[20]</span></a> que 1,5°C já é uma realidade, e agora temos que nos planejar pra <strong>reduzir</strong> os impactos.</p>
       </details>
       <details class="qcard">
         <summary>Palmeiras imperiais: urbanismo não é estética, é função</summary>
-        <p>As palmeiras imperiais, que já foram projeto urbanístico na cidade, foram uma escolha visual que não entregou sombra nem resfriamento<button type="button" class="cite" data-cite="palmeiras-acritica" aria-label="Ver fonte desta informação"></button>. Da mesma forma, hoje trocam-se árvores em um bairro com a promessa de serem plantadas em outro, como se fosse uma matemática simples. "É, retirei as árvores de lá, mas plantei em dobro a quilômetros de distância".</p>
+        <p>As palmeiras imperiais, que já foram projeto urbanístico na cidade, foram uma escolha visual que não entregou sombra nem resfriamento<a class="cite" href="#nota-palmeiras-acritica" id="referencia-palmeiras-acritica" aria-label="Ver fonte desta informação"><span aria-hidden>[21]</span></a>. Da mesma forma, hoje trocam-se árvores em um bairro com a promessa de serem plantadas em outro, como se fosse uma matemática simples. "É, retirei as árvores de lá, mas plantei em dobro a quilômetros de distância".</p>
       </details>
       <details class="qcard">
         <summary>BR-319: a solução que nos aproxima do fim?</summary>
@@ -349,14 +351,626 @@
       </details>
       <details class="qcard">
         <summary>A culpa é nossa. Mas quanto?</summary>
-        <p>A cidade inteira esquenta quase no mesmo ritmo que a área verde ao redor<button type="button" class="cite" data-cite="tendencia-bbox" aria-label="Ver fonte deste dado"></button>, sinal de que parte disso é clima regional (seca, El Niño), e não só Manaus. A cidade é tanto vítima de si quanto do resto do planeta. Mas sem resolver o problema aqui dentro, podemos cobrar solução lá fora?</p>
+        <p>A cidade inteira esquenta quase no mesmo ritmo que a área verde ao redor<a class="cite" href="#nota-tendencia-bbox" id="referencia-tendencia-bbox" aria-label="Ver fonte deste dado"><span aria-hidden>[22]</span></a>, sinal de que parte disso é clima regional (seca, El Niño), e não só Manaus. A cidade é tanto vítima de si quanto do resto do planeta. Mas sem resolver o problema aqui dentro, podemos cobrar solução lá fora?</p>
       </details>
       <details class="qcard">
         <summary>Ilhas de calor urbano na Amazônia: é possível conciliar o crescimento urbano com a preservação ambiental?</summary>
-        <p>Em outras cidades, sim, mas não por acaso. Nova York<button type="button" class="cite" data-cite="nyc-copa" aria-label="Ver fonte desta informação"></button> e Melbourne<button type="button" class="cite" data-cite="melbourne-copa" aria-label="Ver fonte desta informação"></button> colocam meta numérica de cobertura de copa dentro do próprio plano de crescimento, não como reparo depois que a cidade já foi construída. Mesmo assim não é automático: em Perth, a densificação está vencendo a meta de arborização<button type="button" class="cite" data-cite="perth-densificacao" aria-label="Ver fonte desta informação"></button>, prova de que crescer pra dentro sem cuidado também apaga verde. O padrão de Manaus é outro: a cidade cresce seguindo estrada adentro da floresta<button type="button" class="cite" data-cite="manaus-estrada-floresta" aria-label="Ver fonte deste estudo"></button>, empurrando quem chega para a margem, ameaçando áreas ainda verdes. Os próprios dados aqui mostram isso: a maior parte da perda de vegetação está na fronteira de expansão, não no núcleo já consolidado. A solução não é só ocupar o que já é urbano: é crescer de forma inteligente, equilibrando área verde dentro da cidade e arborizando rua a rua. Dá pra fazer isso em Manaus?</p>
+        <p>Em outras cidades, sim, mas não por acaso. Nova York<a class="cite" href="#nota-nyc-copa" id="referencia-nyc-copa" aria-label="Ver fonte desta informação"><span aria-hidden>[23]</span></a> e Melbourne<a class="cite" href="#nota-melbourne-copa" id="referencia-melbourne-copa" aria-label="Ver fonte desta informação"><span aria-hidden>[24]</span></a> colocam meta numérica de cobertura de copa dentro do próprio plano de crescimento, não como reparo depois que a cidade já foi construída. Mesmo assim não é automático: em Perth, a densificação está vencendo a meta de arborização<a class="cite" href="#nota-perth-densificacao" id="referencia-perth-densificacao" aria-label="Ver fonte desta informação"><span aria-hidden>[25]</span></a>, prova de que crescer pra dentro sem cuidado também apaga verde. O padrão de Manaus é outro: a cidade cresce seguindo estrada adentro da floresta<a class="cite" href="#nota-manaus-estrada-floresta" id="referencia-manaus-estrada-floresta" aria-label="Ver fonte deste estudo"><span aria-hidden>[26]</span></a>, empurrando quem chega para a margem, ameaçando áreas ainda verdes. Os próprios dados aqui mostram isso: a maior parte da perda de vegetação está na fronteira de expansão, não no núcleo já consolidado. A solução não é só ocupar o que já é urbano: é crescer de forma inteligente, equilibrando área verde dentro da cidade e arborizando rua a rua. Dá pra fazer isso em Manaus?</p>
       </details>
     </div>
   </div>
+</section>
+
+<section id="notas" class="block sec-9 notes" aria-labelledby="notas-heading">
+    <div class="wrap">
+        <h2 id="notas-heading">Notas</h2>
+
+        <section id="nota-temp-maxima" aria-labelledby="nota-temp-maxima-heading">
+            <header>
+                <p class="note-type">Dado</p>
+                <h3 id="nota-temp-maxima-heading">Temperatura máxima média</h3>
+            </header>
+
+            <p>
+                Percentil 90 da temperatura de superfície diurna mensal
+                (não a média simples do bbox, que dilui o efeito da mancha
+                urbana), corrigida da deriva orbital do satélite Terra,
+                regressão linear 2001–2025. Produto MODIS MOD11A2, via
+                Google Earth Engine.
+            </p>
+
+            <footer>
+                <a href="#referencia-temp-maxima" role="doc-backlink">
+                    Voltar para “Temperatura máxima média”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-amplitude-termica" aria-labelledby="nota-amplitude-termica-heading">
+            <header>
+                <p class="note-type">Dado</p>
+                <h3 id="nota-amplitude-termica-heading">
+                    Amplitude térmica: Reserva Adolpho Ducke × Petrópolis
+                </h3>
+            </header>
+
+            <p>
+                Média histórica (2001–2025) de temperatura de superfície
+                diurna na célula mais próxima de cada ponto, produto MODIS
+                MOD11A2. O padrão reproduz o que o estudo da UEA (2002–2012)
+                já havia documentado sobre ilhas de calor em bairros como
+                Petrópolis.
+            </p>
+
+            <footer>
+                <a href="#referencia-amplitude-termica" role="doc-backlink">
+                    Voltar para “Amplitude térmica: Reserva Adolpho Ducke × Petrópolis”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-halo-floresta" aria-labelledby="nota-halo-floresta-heading">
+            <header>
+                <p class="note-type">Dado</p>
+                <h3 id="nota-halo-floresta-heading">
+                    Custo por km de distância até a floresta
+                </h3>
+            </header>
+
+            <p>
+                Regressão de temperatura contra distância até o fragmento de
+                floresta mais próximo, controlando o NDVI da própria célula,
+                restrita às 214 células já urbanizadas — isola o efeito de
+                proximidade do efeito trivial de “perto da mata também é mais
+                verde”.
+            </p>
+
+            <footer>
+                <a href="#referencia-halo-floresta" role="doc-backlink">
+                    Voltar para “Custo por km de distância até a floresta”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-hotspot-cidade-nova" aria-labelledby="nota-hotspot-cidade-nova-heading">
+            <header>
+                <p class="note-type">Dado</p>
+                <h3 id="nota-hotspot-cidade-nova-heading">
+                    Hotspot de Cidade Nova
+                </h3>
+            </header>
+
+            <p>
+                Regressão linear (NDVI e LST por ano) nas aproximadamente
+                10 células vizinhas com a combinação mais extrema de queda de
+                vegetação e alta de temperatura simultâneas, 2001–2025,
+                produtos MODIS MOD11A2/MOD13Q1.
+            </p>
+
+            <footer>
+                <a href="#referencia-hotspot-cidade-nova" role="doc-backlink">
+                    Voltar para “Hotspot de Cidade Nova”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-mapa-2025" aria-labelledby="nota-mapa-2025-heading">
+            <header>
+                <p class="note-type">Dado</p>
+                <h3 id="nota-mapa-2025-heading">
+                    Mapa de Manaus, célula a célula
+                </h3>
+            </header>
+
+            <p>
+                Temperatura de superfície diurna, média de 2025, grade de
+                1 km (2.040 células). Produto MODIS MOD11A2 via Google Earth
+                Engine, corrigido da deriva orbital do satélite Terra.
+            </p>
+
+            <footer>
+                <a href="#referencia-mapa-2025" role="doc-backlink">
+                    Voltar para “Mapa de Manaus, célula a célula”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-57km2" aria-labelledby="nota-57km2-heading">
+            <header>
+                <p class="note-type">Dado</p>
+                <h3 id="nota-57km2-heading">
+                    57 km² de área verde convertida
+                </h3>
+            </header>
+
+            <p>
+                Classificação de cada célula da grade por NDVI médio
+                (limiar 0,5) em “verde” ou “urbano”, comparando a janela
+                2001–05 com 2021–25. 1.585 km² eram verdes no início da série;
+                57 km² viraram urbanos até o fim dela.
+            </p>
+
+            <footer>
+                <a href="#referencia-57km2" role="doc-backlink">
+                    Voltar para “57 km² de área verde convertida”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-correlacao-grupo" aria-labelledby="nota-correlacao-grupo-heading">
+            <header>
+                <p class="note-type">Dado</p>
+                <h3 id="nota-correlacao-grupo-heading">
+                    Quem perdeu vegetação esquentou mais
+                </h3>
+            </header>
+
+            <p>
+                Contraste entre as 767 células que perderam NDVI e as 1.006
+                que mantiveram ou ganharam, 2001–05 versus 2021–25
+                (n = 1.773 células com dado suficiente nas duas janelas):
+                as que desmataram esquentaram, em média, 38% mais.
+            </p>
+
+            <footer>
+                <a href="#referencia-correlacao-grupo" role="doc-backlink">
+                    Voltar para “Quem perdeu vegetação esquentou mais”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-tendencia-bbox" aria-labelledby="nota-tendencia-bbox-heading">
+            <header>
+                <p class="note-type">Dado</p>
+                <h3 id="nota-tendencia-bbox-heading">
+                    Ritmo de aquecimento: cidade versus floresta ao redor
+                </h3>
+            </header>
+
+            <p>
+                Temperatura diurna média por grupo de células (urbanizadas
+                versus verdes), 2001–05 versus 2021–25. O ritmo de aquecimento
+                das duas é parecido (0,041–0,047 °C/ano), sinal de que parte da
+                subida é clima regional, não só efeito local da cidade.
+            </p>
+
+            <footer>
+                <a href="#referencia-tendencia-bbox" role="doc-backlink">
+                    Voltar para “Ritmo de aquecimento: cidade versus floresta ao redor”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-palmeiras-acritica" aria-labelledby="nota-palmeiras-acritica-heading">
+            <header>
+                <p class="note-type">Matéria</p>
+                <h3 id="nota-palmeiras-acritica-heading">
+                    Palmeiras “são condenadas” pela má gestão em Manaus
+                </h3>
+            </header>
+
+            <p>
+                Das 120 palmeiras imperiais plantadas na Av. Djalma Batista
+                em 2004, 98 ficaram atrofiadas e 6 morreram — todas removidas
+                em 2010. Reportagem sobre o manejo malsucedido do plantio.
+            </p>
+
+            <footer>
+                <a href="https://www.acritica.com/palmeiras-s-o-condenadas-pela-ma-gest-o-em-manaus-1.130988" target="_blank" rel="noreferrer noopener">
+                    Ler na A Crítica
+                    <span aria-hidden>↗</span>
+                </a>
+                <span aria-hidden="true"> · </span>
+                <a href="#referencia-palmeiras-acritica" role="doc-backlink">
+                    Voltar para “Palmeiras ‘são condenadas’ pela má gestão em Manaus”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-pbs-15c" aria-labelledby="nota-pbs-15c-heading">
+            <header>
+                <p class="note-type">Matéria</p>
+                <h3 id="nota-pbs-15c-heading">
+                    Aquecimento vai superar 1,5 °C, diz relatório da ONU
+                </h3>
+            </header>
+
+            <p>
+                A ONU já admite que o planeta vai superar o limite de 1,5 °C
+                do Acordo de Paris “nos próximos anos” — a estratégia virou
+                reduzir o tempo e a severidade da ultrapassagem, não mais
+                evitá-la por completo.
+            </p>
+
+            <footer>
+                <a href="https://www.pbs.org/newshour/science/global-warming-will-exceed-1-5-degree-limit-un-says-in-report-that-maps-path-back-below-danger-zone" target="_blank" rel="noopener noreferrer">
+                    Ler na PBS NewsHour
+                    <span aria-hidden>↗</span>
+                </a>
+                <span aria-hidden="true"> · </span>
+                <a href="#referencia-pbs-15c" role="doc-backlink">
+                    Voltar para “Aquecimento vai superar 1,5 °C, diz relatório da ONU”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-manaus-estrada-floresta" aria-labelledby="nota-manaus-estrada-floresta-heading">
+            <header>
+                <p class="note-type">Estudo</p>
+                <h3 id="nota-manaus-estrada-floresta-heading">
+                    Expansão urbana segue a malha viária
+                </h3>
+            </header>
+
+            <p>
+                Modelagem do risco de desmatamento na Região Metropolitana
+                de Manaus encontrou o maior risco onde floresta disponível
+                se sobrepõe a uma malha viária em expansão, longe do núcleo
+                urbano já consolidado.
+            </p>
+
+            <footer>
+                <a href="https://www.sciencedirect.com/science/article/abs/pii/S0301479721023410" target="_blank" rel="noopener noreferrer">
+                    Ler o estudo
+                    <span aria-hidden>↗</span>
+                </a>
+                <span aria-hidden="true"> · </span>
+                <a href="#referencia-manaus-estrada-floresta" role="doc-backlink">
+                    Voltar para “Expansão urbana segue a malha viária”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-nyc-copa" aria-labelledby="nota-nyc-copa-heading">
+            <header>
+                <p class="note-type">Política pública</p>
+                <h3 id="nota-nyc-copa-heading">
+                    Meta de cobertura de copa de Nova York
+                </h3>
+            </header>
+
+            <p>
+                Nova York mira 30% de cobertura de copa até 2030, priorizando
+                plantio nos bairros historicamente mais expostos a ilhas de
+                calor — meta de equidade, não só de cobertura total.
+            </p>
+
+            <footer>
+                <a href="https://comptroller.nyc.gov/reports/new-york-citys-living-infrastructure-funding-and-managing-nycs-urban-forest-and-tree-canopy/" target="_blank" rel="noopener noreferrer">
+                    Ler o relatório
+                    <span aria-hidden>↗</span>
+                </a>
+                <span aria-hidden="true"> · </span>
+                <a href="#referencia-nyc-copa" role="doc-backlink">
+                    Voltar para “Meta de cobertura de copa de Nova York”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-melbourne-copa" aria-labelledby="nota-melbourne-copa-heading">
+            <header>
+                <p class="note-type">Política pública</p>
+                <h3 id="nota-melbourne-copa-heading">
+                    Estratégia de floresta urbana de Melbourne
+                </h3>
+            </header>
+
+            <p>
+                Meta de dobrar a cobertura de copa pública de 22% para 40%
+                até 2040, com pelo menos 3.000 árvores plantadas por ano —
+                meta numérica dentro do próprio plano de crescimento da cidade.
+            </p>
+
+            <footer>
+                <a href="https://www.melbourne.vic.gov.au/urban-forest-strategy" target="_blank" rel="noopener noreferrer">
+                    Ler a estratégia
+                    <span aria-hidden>↗</span>
+                </a>
+                <span aria-hidden="true"> · </span>
+                <a href="#referencia-melbourne-copa" role="doc-backlink">
+                    Voltar para “Estratégia de floresta urbana de Melbourne”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-perth-densificacao" aria-labelledby="nota-perth-densificacao-heading">
+            <header>
+                <p class="note-type">Estudo</p>
+                <h3 id="nota-perth-densificacao-heading">
+                    Densificação versus cobertura de copa em Perth
+                </h3>
+            </header>
+
+            <p>
+                Modelagem de sistemas (Collaborative Conceptual Modelling)
+                encontrou que, nas políticas atuais, a pressão por densidade
+                habitacional está vencendo a meta de arborização — mais
+                densidade, menos copa, mais calor.
+            </p>
+
+            <footer>
+                <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6068507/" target="_blank" rel="noopener noreferrer">
+                    Ler o estudo
+                    <span aria-hidden>↗</span>
+                </a>
+                <span aria-hidden="true"> · </span>
+                <a href="#referencia-perth-densificacao" role="doc-backlink">
+                    Voltar para “Densificação versus cobertura de copa em Perth”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-calor-saude" aria-labelledby="nota-calor-saude-heading">
+            <header>
+                <p class="note-type">Estudo</p>
+                <h3 id="nota-calor-saude-heading">
+                    Ilha de calor e internações cardiovasculares
+                </h3>
+            </header>
+
+            <p>
+                Estudo da EPA com idosos em áreas metropolitanas dos EUA
+                (2000–2017): o risco de internação por doença cardiovascular
+                durante calor extremo foi de 2,4% em áreas de ilha de calor
+                intensa, contra 1,0% em áreas mais frias da mesma cidade.
+            </p>
+
+            <footer>
+                <a href="https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=358808&amp;Lab=CPHEA" target="_blank" rel="noopener noreferrer">
+                    Ler o estudo (EPA)
+                    <span aria-hidden>↗</span>
+                </a>
+                <span aria-hidden="true"> · </span>
+                <a href="#referencia-calor-saude" role="doc-backlink">
+                    Voltar para “Ilha de calor e internações cardiovasculares”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-calor-recursos" aria-labelledby="nota-calor-recursos-heading">
+            <header>
+                <p class="note-type">Dado</p>
+                <h3 id="nota-calor-recursos-heading">
+                    Recorde de energia e apagão em Manaus
+                </h3>
+            </header>
+
+            <p>
+                A Região Metropolitana de Manaus bateu recorde de consumo de
+                energia (1.731,91 MW) em 20/08/2024, dia de 36 °C com sensação
+                térmica de 45 °C. Separadamente, um apagão em março de 2025
+                (falha numa linha de transmissão do Sistema Interligado
+                Nacional) deixou estações de tratamento de água paradas,
+                mostrando como o abastecimento depende do fornecimento elétrico.
+            </p>
+
+            <footer>
+                <a href="https://www.acritica.com/geral/em-meio-a-onda-de-calor-regi-o-metropolitana-de-manaus-bate-recorde-de-consumo-de-energia-eletrica-1.349168" target="_blank" rel="noopener noreferrer">
+                    Ler na A Crítica
+                    <span aria-hidden>↗</span>
+                </a>
+                <span aria-hidden="true"> · </span>
+                <a href="#referencia-calor-recursos" role="doc-backlink">
+                    Voltar para “Recorde de energia e apagão em Manaus”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-calor-financas" aria-labelledby="nota-calor-financas-heading">
+            <header>
+                <p class="note-type">Dado</p>
+                <h3 id="nota-calor-financas-heading">
+                    A energia mais cara do Brasil
+                </h3>
+            </header>
+
+            <p>
+                kWh a R$ 1,07 no Amazonas contra média nacional de R$ 0,87
+                (dados ANEEL) — a hidrelétrica de Balbina (250 MW) não supre
+                a demanda de Manaus, que precisa comprar energia mais cara de
+                fora. Segundo a Eletrobras/Procel, o ar-condicionado pode
+                chegar a 40% do consumo residencial de energia no verão.
+            </p>
+
+            <footer>
+                <a href="https://cieam.com.br/noticias/amazonas-tem-a-tarifa-de-energia-mais-cara-do-pais" target="_blank" rel="noopener noreferrer">
+                    Ler no CIEAM
+                    <span aria-hidden>↗</span>
+                </a>
+                <span aria-hidden="true"> · </span>
+                <a href="#referencia-calor-financas" role="doc-backlink">
+                    Voltar para “A energia mais cara do Brasil”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-calor-ambiente" aria-labelledby="nota-calor-ambiente-heading">
+            <header>
+                <p class="note-type">Estudo</p>
+                <h3 id="nota-calor-ambiente-heading">
+                    Desmatamento, chuva e renda agrícola na Amazônia
+                </h3>
+            </header>
+
+            <p>
+                Análise de 1982–2018 encontrou queda de 6% a 30% na chuva
+                sazonal em sete estados produtores de soja associada ao
+                desmatamento na Amazônia — com impacto direto na safra e na
+                renda agrícola na própria região.
+            </p>
+
+            <footer>
+                <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8110785/" target="_blank" rel="noopener noreferrer">
+                    Ler o estudo (PNAS)
+                    <span aria-hidden>↗</span>
+                </a>
+                <span aria-hidden="true"> · </span>
+                <a href="#referencia-calor-ambiente" role="doc-backlink">
+                    Voltar para “Desmatamento, chuva e renda agrícola na Amazônia”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-chuva-volume" aria-labelledby="nota-chuva-volume-heading">
+            <header>
+                <p class="note-type">Dado</p>
+                <h3 id="nota-chuva-volume-heading">
+                    Volume de chuva: 2001–12 versus 2013–25
+                </h3>
+            </header>
+
+            <p>
+                CHIRPS v3 (produto PENTAD, nativo), reduzido sobre o bbox
+                inteiro de Manaus, que inclui a cidade e a floresta ao redor,
+                sem quebra por zona (o pixel de 5,5 km é maior que boa parte
+                da malha urbana). Comparação por média de metade da série
+                contra a outra metade, não só os anos das pontas, já que uma
+                janela curta é sensível demais a um único ano de El Niño ou
+                La Niña. Confirmado por uma segunda fonte independente, a
+                reanálise ERA5-Land (1979–2025): mesma direção, queda um
+                pouco maior.
+            </p>
+
+            <footer>
+                <a href="#referencia-chuva-volume-1" role="doc-backlink">
+                    Voltar para “Volume anual”
+                    &#8617;&#xFE0E;
+                </a>
+                <span aria-hidden="true"> · </span>
+                <a href="#referencia-chuva-volume-2" role="doc-backlink">
+                    Voltar para “Volume de chuva: 2001–12 versus 2013–25”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-chuva-dias" aria-labelledby="nota-chuva-dias-heading">
+            <header>
+                <p class="note-type">Dado</p>
+                <h3 id="nota-chuva-dias-heading">
+                    Dias de chuva por ano: 2001–12 versus 2013–25
+                </h3>
+            </header>
+
+            <p>
+                CHIRPS v3 (produto diário, derivado via satélite IMERG,
+                portanto mais incerto que o volume), limiar de 1 mm/dia
+                (padrão da Organização Meteorológica Mundial), mesmo recorte
+                e mesma técnica do número de volume. A queda se concentra na
+                estação seca, entre junho e outubro; dezembro a maio quase
+                não mudou. Confirmado por uma segunda fonte independente
+                (ERA5-Land): mesma direção, queda maior.
+            </p>
+
+            <footer>
+                <a href="#referencia-chuva-dias" role="doc-backlink">
+                    Voltar para “Dias de chuva por ano: 2001–12 versus 2013–25”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-chuva-julho" aria-labelledby="nota-chuva-julho-heading">
+            <header>
+                <p class="note-type">Dado</p>
+                <h3 id="nota-chuva-julho-heading">
+                    Julho: o mês mais afetado
+                </h3>
+            </header>
+
+            <p>
+                CHIRPS v3, mesmo recorte e mesma técnica do resto dos números
+                de chuva do site: 14,2 dias de chuva em julho na média de
+                2001 a 2012, contra 11,5 dias na média de 2013 a 2025, queda
+                de 19%. Numa segunda fonte independente (reanálise ERA5-Land,
+                1979–2025), julho também aparece entre os meses mais afetados,
+                com dias de chuva caindo de 24,2 para 17,3 (29%) e volume de
+                150,2 mm para 90,9 mm (40%).
+            </p>
+
+            <footer>
+                <a href="#referencia-chuva-julho" role="doc-backlink">
+                    Voltar para “Julho: o mês mais afetado”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-chuva-estacao-seca" aria-labelledby="nota-chuva-estacao-seca-heading">
+            <header>
+                <p class="note-type">Dado</p>
+                <h3 id="nota-chuva-estacao-seca-heading">
+                    Estação seca (junho a outubro): 2001–12 versus 2013–25
+                </h3>
+            </header>
+
+            <p>
+                Soma dos dias de chuva de junho a outubro, CHIRPS v3, mesmo
+                bbox e mesma técnica do resto dos números de chuva do site:
+                72,6 dias na média de 2001 a 2012, contra 62,3 dias na média
+                de 2013 a 2025. Numa segunda fonte independente (ERA5-Land),
+                a queda no mesmo período de cinco meses chega a 25% nos dias
+                de chuva e cerca de 28% no volume.
+            </p>
+
+            <footer>
+                <a href="#referencia-chuva-estacao-seca" role="doc-backlink">
+                    Voltar para “Estação seca (junho a outubro): 2001–12 versus 2013–25”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+
+        <section id="nota-chuva-torre-petropolis" aria-labelledby="nota-chuva-torre-petropolis-heading">
+            <header>
+                <p class="note-type">Estudo</p>
+                <h3 id="nota-chuva-torre-petropolis-heading">
+                    Impacto da urbanização no balanço de energia em Manaus
+                </h3>
+            </header>
+
+            <p>
+                Torre de medição instalada no bairro Petrópolis (2022)
+                comparou o balanço de energia da área urbana com o de floresta
+                primária (Reserva Ducke). Na estação seca, a floresta destina
+                cerca de 75% da energia disponível para evapotranspiração, e a
+                área urbana, só cerca de 37%. O resto vira calor sensível, que
+                aquece o ar diretamente em vez de virar vapor d’água. É o
+                mecanismo físico local por trás da ligação entre perda de
+                vegetação e menos chuva.
+            </p>
+
+            <footer>
+                <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12540988/" target="_blank" rel="noopener noreferrer">
+                    Ler o estudo (Scientific Reports)
+                    <span aria-hidden>↗</span>
+                </a>
+                <span aria-hidden="true"> · </span>
+                <a href="#referencia-chuva-torre-petropolis" role="doc-backlink">
+                    Voltar para “Impacto da urbanização no balanço de energia em Manaus”
+                    &#8617;&#xFE0E;
+                </a>
+            </footer>
+        </section>
+    </div>
 </section>
 
 </article>
@@ -372,17 +986,6 @@
     </div>
   </div>
 </footer>
-
-<div class="cite-overlay" id="cite-overlay">
-  <div class="cite-overlay-backdrop"></div>
-  <div class="cite-card" role="dialog" aria-modal="true" aria-labelledby="cite-title">
-    <button type="button" class="cite-close" aria-label="Fechar">×</button>
-    <div class="cite-tipo" id="cite-tipo"></div>
-    <h4 id="cite-title"></h4>
-    <p id="cite-corpo"></p>
-    <a class="cite-link" id="cite-link" target="_blank" rel="noopener"></a>
-  </div>
-</div>
 
 <div class="grafico-tooltip" id="grafico-tooltip" role="status" aria-live="polite"></div>
 
