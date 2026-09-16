@@ -120,6 +120,25 @@
   .hero-progress{ position:absolute; left:0; right:0; bottom:0; height:3px; background:rgba(255,255,255,.14); z-index:3; }
   .hero-progress-bar{ height:100%; width:0%; background:#f5f1e8; }
 
+  .thematic-break {
+    border: none;
+    border-top: calc(3 / 16 * 1rem) double currentColor;
+    color: currentColor;
+    overflow: visible;
+    text-align: center;
+    height: calc(5 / 16 * 1rem);
+    margin: 0;
+  }
+
+  .thematic-break::after {
+    content: "⁂";
+    font-size: 2rem;
+    padding: 0 calc(4 / 16 * 1rem);
+    position: relative;
+    top: -1.5rem;
+    background: inherit;
+  }
+
   /* ================= SECTIONS — degrade continuo verde -> vermelho ================= */
   .sec-0{ background: linear-gradient(180deg, hsl(var(--h0) var(--wash-s) var(--wash-l)), hsl(var(--h1) var(--wash-s) var(--wash-l))); }
   .sec-1{ background: linear-gradient(180deg, hsl(var(--h1) var(--wash-s) var(--wash-l)), hsl(var(--h2) var(--wash-s) var(--wash-l))); }
@@ -386,12 +405,15 @@
     <p class="dek">Quando eu era pequeno, ficava muito incomodado quando viajava e ouvia de outras pessoas que Manaus "deve ser só mato". Que devia ter "onça na rua", "jacaré por todo lado". Achava um desconhecimento, afinal todos os eletrônicos que a pessoa tinha deveriam ter saído do Polo Industrial de Manaus.</p>
     <p class="dek">Hoje não mudou tanto, as pessoas ainda falam exatamente o mesmo e eu continuo incomodado. Mas de outra forma.</p>
     <p class="dek">Antes incomodava por ser mentira. Agora incomoda porque eu queria muito que fosse verdade.</p>
-    <h2 style="margin-top:1.6rem">Manaus, a cidade que nega a Amazônia</h2>
   </div>
 </section>
 
+<hr class="thematic-break sec-1" />
+
 <section class="block sec-1">
   <div class="wrap">
+    <h2 style="margin-top:1.6rem">Manaus, a cidade que nega a Amazônia</h2>
+
     <p class="dek">Se fosse verdade, talvez não existisse <strong>8,8°C</strong> de diferença entre a Reserva Adolpho Ducke e um bairro populoso. Não existiria uma diferença que já chegou a incríveis <strong>11,3°C</strong> entre 2 regiões da cidade.</p>
 
     <div class="therm">
