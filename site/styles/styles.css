@@ -616,6 +616,18 @@ section.block {
 }
 
 .carousel-track {
+  cursor: grab;
+  user-select: none;
+}
+
+.carousel-track.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+}
+
+
+.carousel-track {
     --card-width: calc(620 / 16 * 1rem);
     --card-width: clamp(320px, 75vw, calc(620 / 16 * 1rem));
     --gap: 1.2rem;
