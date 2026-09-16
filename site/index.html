@@ -97,17 +97,33 @@
     position:absolute; top:0; left:0; right:0; z-index:2; text-align:center;
     padding: max(2rem, env(safe-area-inset-top)) 1.4rem 0;
     font-family:"Fraunces",serif; font-weight:600; color:#f5f1e8;
-    font-size:clamp(1.15rem,4.4vw,1.7rem); line-height:1.25; pointer-events:none;
+    font-size:clamp(1.15rem,4.4vw,1.7rem); line-height:1.25;
     text-shadow: 0 2px 16px rgba(0,0,0,.6), 0 1px 3px rgba(0,0,0,.65);
     max-width:20ch; margin:0 auto;
   }
   .hero-overlay{
     position:relative; z-index:2; text-align:center; color:#f5f1e8;
-    pointer-events:none; max-width:92vw;
+    max-width:92vw;
     text-shadow: 0 2px 20px rgba(0,0,0,.6), 0 1px 4px rgba(0,0,0,.65);
   }
-  .hero-year{ font-weight:700; font-size:clamp(4.2rem,20vw,9rem); line-height:.92; font-variant-numeric:tabular-nums; }
-  .hero-temp{ margin-top:.6rem; font-size:clamp(1.9rem,8.5vw,3.2rem); font-variant-numeric:tabular-nums; }
+
+  .hero-year{
+    font-weight: 700;
+    font-size: clamp(4.2rem, 20vw, 9rem);
+    line-height: .92;
+    font-variant-numeric: tabular-nums;
+    margin-block: 0;
+  }
+
+
+
+    .hero-temp{
+        margin-top:.6rem;
+        font-size:clamp(1.9rem,8.5vw,3.2rem);
+        font-variant-numeric:tabular-nums;
+        margin-block-end: 0;
+    }
+
   .hero-temp b{ font-weight:700; }
   .hero-temp-label{ display:block; font-family:"Work Sans",sans-serif; font-size:.66rem; letter-spacing:.09em; text-transform:uppercase; opacity:.78; margin-top:.5rem; }
   .hero-kicker{
@@ -384,21 +400,34 @@
 </head>
 <body>
 
-<section class="hero-scroll" id="hero-scroll">
+<main>
+
+<article aria-labelledby="hero-title">
+
+<div class="hero-scroll" id="hero-scroll">
   <div class="hero-pin">
     <canvas id="hero-canvas"></canvas>
     <div class="hero-scrim"></div>
-    <div class="hero-title">Manaus, a cidade que nega a Amazônia</div>
+    <h1 id="hero-title" class="hero-title">Manaus, a cidade que nega a Amazônia</h1>
     <div class="hero-overlay">
-      <div class="hero-year" id="hero-year">2001</div>
-      <div class="hero-temp"><b id="hero-temp-num">32,6</b>°C
-        <span class="hero-temp-label">Temperatura máxima média na superfície da cidade<button type="button" class="cite on-dark" data-cite="temp-maxima" aria-label="Ver fonte deste dado"></button></span>
-      </div>
+      <p class="hero-year"><span id="hero-year">2001</span></p>
+      <p class="hero-temp">
+        <b id="hero-temp-num">32,6</b> °C
+        <span class="hero-temp-label">
+            Temperatura máxima média na superfície da cidade
+            <button
+                type="button"
+                class="cite on-dark"
+                data-cite="temp-maxima"
+                aria-label="Ver fonte deste dado">
+            </button>
+        </span>
+      </p>
     </div>
-    <div class="hero-kicker">role para avançar no tempo ↓</div>
-    <div class="hero-progress"><div class="hero-progress-bar" id="hero-progress-bar"></div></div>
+    <div aria-hidden="true" class="hero-kicker">role para avançar no tempo ↓</div>
+    <div aria-hidden="true" class="hero-progress"><div class="hero-progress-bar" id="hero-progress-bar"></div></div>
   </div>
-</section>
+</div>
 
 <section class="block sec-0">
   <div class="wrap">
@@ -679,6 +708,10 @@
     </div>
   </div>
 </section>
+
+</article>
+
+</main>
 
 <footer>
   <div class="wrap">
