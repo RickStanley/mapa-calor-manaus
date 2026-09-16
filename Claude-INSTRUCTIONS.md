@@ -9,7 +9,12 @@ de "onde mexer pra fazer o quê".
 
 ```
 ├── site/                    # Site estático (HTML/CSS/JS puro, sem build)
-│   └── index.html           # Página única — é isto que o Vercel publica
+│   ├── index.html           # Markup — é isto que o Vercel publica
+│   ├── styles/styles.css    # Todo o CSS do site
+│   ├── scripts/main.js      # Todo o JS do site (gráficos, tooltip, citações)
+│   └── resources/           # Dados grandes demais pra ficar inline no JS
+│       ├── hero-heatmap.json   # Grade HEAT (40x51 células x 25 anos) — hero + mapa de ilhas de calor
+│       └── vegetation.json     # 1.773 pontos do scatter NDVI×LST
 ├── scripts/                 # Pipeline de dados, roda em ordem (01 a 11)
 ├── src/mapa_amazonia/       # Código compartilhado entre os scripts
 │   ├── config.py            # Todo parâmetro do projeto mora aqui
@@ -99,20 +104,43 @@ revise se ainda se aplica antes de reusar em um projeto com período diferente.
 
 ## Editando o site
 
-`site/index.html` é um arquivo único, sem build step: HTML, CSS e JS estão
-todos ali, sem framework, sem bundler. Os dados (grade de 2.040 células por
-25 anos, série de dispersão, série do hotspot) estão embutidos no próprio
-HTML como JSON — não há chamada de API em tempo de execução.
+Sem build step (sem framework, sem bundler), mas desde 16/09/2026 **não é
+mais um arquivo único**: `site/index.html` tem só o markup, `site/styles/
+styles.css` tem todo o CSS e `site/scripts/main.js` tem todo o JS (gráficos,
+tooltip compartilhado, sistema de citações). A maioria dos dados dos
+gráficos (halo, hotspot, chuva, citações) ainda está embutida como literal
+JS dentro de `main.js` — só os dois blocos grandes demais pra isso viraram
+arquivo próprio em `site/resources/`:
+
+- `hero-heatmap.json` — a grade `HEAT` (40×51 células × 25 anos), usada
+  **tanto pelo hero (mapa que rola no topo) quanto pelo mapa interativo de
+  "Ilhas de Calor"** (seção "Manaus em 2025, célula a célula") — os dois
+  dependem do mesmo arquivo.
+- `vegetation.json` — os 1.773 pontos do gráfico de dispersão (scatter).
+
+Isso significa que **agora existe chamada de API em tempo de execução**
+(`fetch` dos dois JSONs acima, em `main.js`), diferente de antes. As duas
+buscas têm `try`/`catch`: se `hero-heatmap.json` falhar ao carregar, o hero
+e o mapa de "Ilhas de Calor" ficam desativados nessa carga (guarda
+`if(!HEAT) return`), mas o resto do site (halo, hotspot, chuva, scatter)
+continua funcionando normalmente — não é mais um ponto único de falha pro
+JS inteiro. Mesma lógica isolada pro scatter/`vegetation.json`.
+
+**Consequência prática: abrir `site/index.html` direto no navegador
+(protocolo `file://`, sem servidor) não funciona mais** — `fetch` de
+arquivo local é bloqueado pelo navegador, então o hero e o mapa de ilhas de
+calor não carregam (o `try/catch` evita que isso quebre o resto, mas essas
+duas partes específicas ficam sempre vazias nesse modo). Sirva a pasta
+`site/` com qualquer servidor estático antes de testar localmente, por
+exemplo `python3 -m http.server` de dentro de `site/`.
 
 Para atualizar os números depois de rodar o pipeline de novo: os dados que
 alimentam o site vêm de `data/processed/` (os Parquet por ano, `grade.geojson`
-e os JSONs de contexto). Não existe hoje um script automático que regenera o
-HTML embutido a partir desses arquivos — a atualização é manual, editando os
-blocos de dados diretamente no `<script>` do `index.html`.
-
-Para rodar localmente, basta abrir `site/index.html` num navegador (ou servir
-a pasta `site/` com qualquer servidor estático — `python3 -m http.server`,
-por exemplo).
+e os JSONs de contexto). Não existe hoje um script automático que regenera
+os arquivos do site a partir desses dados — a atualização é manual:
+- Grade `HEAT` (hero + mapa de ilhas de calor) → editar `site/resources/hero-heatmap.json` diretamente.
+- Pontos do scatter → editar `site/resources/vegetation.json` diretamente.
+- Qualquer outro dado (halo, hotspot, chuva, citações, big numbers) → editar o literal correspondente dentro de `site/scripts/main.js`.
 
 **Tooltip de gráfico (hover/toque):** todo gráfico de ponto ou barra que
 precisa mostrar o valor exato (halo, hotspot, os dois de chuva — não o
