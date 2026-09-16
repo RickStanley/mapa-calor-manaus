@@ -730,7 +730,7 @@
 })();
 
 (function(){
-    const track = document.getElementById("carousel-track");
+    const track = document.getElementById('carousel-track');
     if (!track) return;
 
     let arrastando = false;
@@ -738,12 +738,12 @@
     let scrollInicial = 0;
     let moveu = false;
 
-    track.addEventListener("pointerdown", (e) => {
-        if (e.pointerType !== "mouse" || e.button !== 0) return;
+    track.addEventListener('pointerdown', (e) => {
+        if (e.pointerType !== 'mouse' || e.button !== 0) return;
 
         if (
             e.target.closest(
-                "button, a, input, textarea, select, label, [contenteditable]"
+                'button, a, input, textarea, select, label, [contenteditable]'
             )
         ) {
             return;
@@ -754,11 +754,11 @@
         comecouX = e.clientX;
         scrollInicial = track.scrollLeft;
 
-        track.classList.add("is-dragging");
+        track.classList.add('is-dragging');
         track.setPointerCapture(e.pointerId);
     });
 
-    track.addEventListener("pointermove", (e) => {
+    track.addEventListener('pointermove', (e) => {
         if (!arrastando) return;
 
         const distancia = e.clientX - comecouX;
@@ -774,22 +774,22 @@
         if (!arrastando) return;
 
         arrastando = false;
-        track.classList.remove("is-dragging");
+        track.classList.remove('is-dragging');
 
         if (track.hasPointerCapture(e.pointerId)) {
             track.releasePointerCapture(e.pointerId);
         }
     }
 
-    track.addEventListener("pointerup", soltar);
-    track.addEventListener("pointercancel", soltar);
-    track.addEventListener("lostpointercapture", () => {
+    track.addEventListener('pointerup', soltar);
+    track.addEventListener('pointercancel', soltar);
+    track.addEventListener('lostpointercapture', () => {
         arrastando = false;
-        track.classList.remove("is-dragging");
+        track.classList.remove('is-dragging');
     });
 
     track.addEventListener(
-        "click",
+        'click',
         (e) => {
             if (moveu) {
                 e.preventDefault();
@@ -800,7 +800,7 @@
         true
     );
 
-    track.querySelectorAll("img").forEach((img) => {
+    track.querySelectorAll('img').forEach((img) => {
         img.draggable = false;
     });
 })();

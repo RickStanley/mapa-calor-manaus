@@ -615,17 +615,11 @@ section.block {
     margin: 2.2rem auto 0;
 }
 
-.carousel-track {
-  cursor: grab;
-  user-select: none;
-}
-
 .carousel-track.is-dragging {
-  cursor: grabbing;
-  scroll-snap-type: none;
-  scroll-behavior: auto;
+    cursor: grabbing;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
 }
-
 
 .carousel-track {
     --card-width: calc(620 / 16 * 1rem);
@@ -637,6 +631,8 @@ section.block {
     padding-inline: calc(50% - var(--card-width) / 2);
     padding-block-end: 0.75rem;
     gap: var(--gap);
+    cursor: grab;
+    user-select: none;
 }
 
 .carousel-slide {
