@@ -187,28 +187,67 @@
   .effect p{ margin:0; font-size:.88rem; color:var(--ink-soft); line-height:1.5; }
 
   /* ================= CARROSSEL DE FOTOS ================= */
-  .carousel{ position:relative; margin:2.2rem auto 0; max-width:620px; }
-  .carousel-track{
-    display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:1.2rem;
-    scrollbar-width:none; -ms-overflow-style:none; margin:0; padding:0; list-style:none;
-  }
-  .carousel-track::-webkit-scrollbar{ display:none; }
-  .carousel-slide{ flex:0 0 100%; scroll-snap-align:center; margin:0; }
-  .carousel-slide img{ width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:14px; display:block; }
-  .carousel-slide figcaption{ display:flex; flex-direction:column; gap:.15rem; margin-top:.7rem; text-align:left; }
-  .carousel-local{ font-weight:600; color:var(--ink); font-size:.92rem; }
-  .carousel-credito{ font-size:.72rem; color:var(--ink-mute); }
-  .carousel-btn{
-    position:absolute; top:38%; transform:translateY(-50%); width:2.5rem; height:2.5rem;
-    border-radius:50%; border:none; background:var(--paper); color:var(--ink);
-    box-shadow:var(--shadow); font-size:1.3rem; line-height:1; cursor:pointer;
-    display:flex; align-items:center; justify-content:center; padding:0;
-  }
-  .carousel-prev{ left:-1.25rem; } .carousel-next{ right:-1.25rem; }
-  @media (max-width:680px){ .carousel-prev{ left:.4rem; } .carousel-next{ right:.4rem; } }
-  .carousel-dots{ display:flex; justify-content:center; gap:.45rem; margin-top:.9rem; }
-  .carousel-dot{ width:.5rem; height:.5rem; border-radius:50%; border:none; padding:0; background:var(--paper-line); cursor:pointer; }
-  .carousel-dot.ativo{ background:var(--a-7); }
+
+    .sec-7 .wrap {
+        max-width: unset;
+        padding: 0;
+    }
+
+    .carousel {
+        position: relative;
+        margin: 2.2rem auto 0;
+    }
+
+    .carousel-track {
+        --card-width: calc(620 / 16 * 1rem);
+        --card-width: clamp(320px, 75vw, calc(620 / 16 * 1rem));
+        --gap: 1.2rem;
+
+        display: flex;
+        overflow-x: auto;
+
+        scroll-snap-type: x mandatory;
+
+        padding-inline: calc(50% - var(--card-width) / 2);
+        padding-block-end: 0.75rem;
+
+        gap: var(--gap);
+    }
+
+    .carousel-slide {
+        flex: 0 0 100%;
+        max-width: var(--card-width);
+        scroll-snap-align: center;
+        margin: 0;
+    }
+
+    .carousel-slide img {
+        width: 100%;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+        border-radius: 14px;
+        display: block;
+    }
+
+    .carousel-slide figcaption {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        margin-top: 0.7rem;
+        text-align: left;
+    }
+
+
+    .carousel-local {
+        font-weight: 600;
+        color: var(--ink);
+        font-size: 0.92rem;
+    }
+
+    .carousel-credito {
+        font-size: 0.72rem;
+        color: var(--ink-mute);
+    }
 
   .chart-card{
     margin:1.8rem auto; max-width:620px;
@@ -586,9 +625,6 @@
           <figcaption><span class="carousel-local">Manaus</span><span class="carousel-credito">Foto: Adneison Severiano/g1 AM</span></figcaption>
         </figure>
       </div>
-      <button type="button" class="carousel-btn carousel-prev" aria-label="Foto anterior">‹</button>
-      <button type="button" class="carousel-btn carousel-next" aria-label="Próxima foto">›</button>
-      <div class="carousel-dots" id="carousel-dots"></div>
     </div>
   </div>
 </section>
@@ -1498,50 +1534,6 @@
     });
   })();
 
-  // ================= carrossel de fotos (Parques Sem Sombras) =================
-  (function(){
-    const carrossel = document.getElementById('carousel-parques');
-    if(!carrossel) return;
-    const track = document.getElementById('carousel-track');
-    const dotsWrap = document.getElementById('carousel-dots');
-    const prevBtn = carrossel.querySelector('.carousel-prev');
-    const nextBtn = carrossel.querySelector('.carousel-next');
-    const slides = [...track.children];
-
-    slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'carousel-dot';
-      dot.setAttribute('aria-label', 'Ir pra foto ' + (i + 1) + ' de ' + slides.length);
-      dot.addEventListener('click', () => {
-        slides[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      });
-      dotsWrap.appendChild(dot);
-    });
-    const dots = [...dotsWrap.children];
-
-    function atualizarAtivo(){
-      const centro = track.scrollLeft + track.clientWidth / 2;
-      let idx = 0, menor = Infinity;
-      slides.forEach((s, i) => {
-        const d = Math.abs((s.offsetLeft + s.offsetWidth / 2) - centro);
-        if(d < menor){ menor = d; idx = i; }
-      });
-      dots.forEach((d, i) => d.classList.toggle('ativo', i === idx));
-    }
-
-    let pendente = false;
-    track.addEventListener('scroll', () => {
-      if(pendente) return;
-      pendente = true;
-      requestAnimationFrame(() => { atualizarAtivo(); pendente = false; });
-    }, { passive: true });
-
-    prevBtn.addEventListener('click', () => track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' }));
-    nextBtn.addEventListener('click', () => track.scrollBy({ left: track.clientWidth, behavior: 'smooth' }));
-
-    atualizarAtivo();
-  })();
 })();
 </script>
 
