@@ -727,47 +727,4 @@
     });
   })();
 
-  // ================= carrossel: arrastar com o mouse no desktop =================
-  // overflow-x:auto já dá scroll por trackpad/barra de rolagem, mas clicar
-  // e arrastar com o mouse não move um scroll container por padrão --
-  // precisa de JS. Só ativa pra ponteiro tipo mouse: toque já tem scroll
-  // nativo por gesto, arrastar com um dedo faria o gesto ser capturado
-  // duas vezes.
-  (function(){
-    const track = document.getElementById('carousel-track');
-    if(!track) return;
-
-    let arrastando = false, comecouX = 0, scrollInicial = 0;
-
-    track.addEventListener('pointerdown', (e) => {
-      if(e.pointerType !== 'mouse') return;
-      arrastando = true;
-      comecouX = e.clientX;
-      scrollInicial = track.scrollLeft;
-      track.style.scrollSnapType = 'none'; // solta o snap durante o arrasto, senão o navegador briga com o movimento
-      // user-select:none só enquanto arrasta -- fora disso, o crédito da
-      // foto (figcaption, incluindo atribuição CC BY) precisa continuar
-      // selecionável normalmente.
-      track.classList.add('arrastando');
-      track.setPointerCapture(e.pointerId);
-    });
-    track.addEventListener('pointermove', (e) => {
-      if(!arrastando) return;
-      track.scrollLeft = scrollInicial - (e.clientX - comecouX);
-    });
-    function soltar(){
-      if(!arrastando) return;
-      arrastando = false;
-      track.style.scrollSnapType = '';
-      track.classList.remove('arrastando');
-    }
-    track.addEventListener('pointerup', soltar);
-    track.addEventListener('pointercancel', soltar);
-
-    // sem isso, soltar o botão do mouse em cima de uma foto dispara o
-    // "arrastar imagem" nativo do navegador (ghost da imagem seguindo o
-    // cursor), que atrapalha o gesto de arrastar o carrossel inteiro.
-    track.querySelectorAll('img').forEach(img => img.setAttribute('draggable', 'false'));
-  })();
-
 })();
