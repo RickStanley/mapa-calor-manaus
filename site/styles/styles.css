@@ -607,6 +607,9 @@ section.block {
     padding-block-end: 0.75rem;
     gap: var(--gap);
     cursor: grab;
+}
+
+.carousel-track.arrastando {
     user-select: none;
     -webkit-user-select: none;
 }

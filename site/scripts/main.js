@@ -891,6 +891,10 @@
       comecouX = e.clientX;
       scrollInicial = track.scrollLeft;
       track.style.scrollSnapType = 'none'; // solta o snap durante o arrasto, senão o navegador briga com o movimento
+      // user-select:none só enquanto arrasta -- fora disso, o crédito da
+      // foto (figcaption, incluindo atribuição CC BY) precisa continuar
+      // selecionável normalmente.
+      track.classList.add('arrastando');
       track.setPointerCapture(e.pointerId);
     });
     track.addEventListener('pointermove', (e) => {
@@ -901,6 +905,7 @@
       if(!arrastando) return;
       arrastando = false;
       track.style.scrollSnapType = '';
+      track.classList.remove('arrastando');
     }
     track.addEventListener('pointerup', soltar);
     track.addEventListener('pointercancel', soltar);
