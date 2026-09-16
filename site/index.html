@@ -97,17 +97,33 @@
     position:absolute; top:0; left:0; right:0; z-index:2; text-align:center;
     padding: max(2rem, env(safe-area-inset-top)) 1.4rem 0;
     font-family:"Fraunces",serif; font-weight:600; color:#f5f1e8;
-    font-size:clamp(1.15rem,4.4vw,1.7rem); line-height:1.25; pointer-events:none;
+    font-size:clamp(1.15rem,4.4vw,1.7rem); line-height:1.25;
     text-shadow: 0 2px 16px rgba(0,0,0,.6), 0 1px 3px rgba(0,0,0,.65);
     max-width:20ch; margin:0 auto;
   }
   .hero-overlay{
     position:relative; z-index:2; text-align:center; color:#f5f1e8;
-    pointer-events:none; max-width:92vw;
+    max-width:92vw;
     text-shadow: 0 2px 20px rgba(0,0,0,.6), 0 1px 4px rgba(0,0,0,.65);
   }
-  .hero-year{ font-weight:700; font-size:clamp(4.2rem,20vw,9rem); line-height:.92; font-variant-numeric:tabular-nums; }
-  .hero-temp{ margin-top:.6rem; font-size:clamp(1.9rem,8.5vw,3.2rem); font-variant-numeric:tabular-nums; }
+
+  .hero-year{
+    font-weight: 700;
+    font-size: clamp(4.2rem, 20vw, 9rem);
+    line-height: .92;
+    font-variant-numeric: tabular-nums;
+    margin-block: 0;
+  }
+
+
+
+    .hero-temp{
+        margin-top:.6rem;
+        font-size:clamp(1.9rem,8.5vw,3.2rem);
+        font-variant-numeric:tabular-nums;
+        margin-block-end: 0;
+    }
+
   .hero-temp b{ font-weight:700; }
   .hero-temp-label{ display:block; font-family:"Work Sans",sans-serif; font-size:.66rem; letter-spacing:.09em; text-transform:uppercase; opacity:.78; margin-top:.5rem; }
   .hero-kicker{
@@ -119,6 +135,25 @@
   @keyframes bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(7px); } }
   .hero-progress{ position:absolute; left:0; right:0; bottom:0; height:3px; background:rgba(255,255,255,.14); z-index:3; }
   .hero-progress-bar{ height:100%; width:0%; background:#f5f1e8; }
+
+  .thematic-break {
+    border: none;
+    border-top: calc(3 / 16 * 1rem) double currentColor;
+    color: currentColor;
+    overflow: visible;
+    text-align: center;
+    height: calc(5 / 16 * 1rem);
+    margin: 0;
+  }
+
+  .thematic-break::after {
+    content: "⁂";
+    font-size: 2rem;
+    padding: 0 calc(4 / 16 * 1rem);
+    position: relative;
+    top: -1.5rem;
+    background: inherit;
+  }
 
   /* ================= SECTIONS — degrade continuo verde -> vermelho ================= */
   .sec-0{ background: linear-gradient(180deg, hsl(var(--h0) var(--wash-s) var(--wash-l)), hsl(var(--h1) var(--wash-s) var(--wash-l))); }
@@ -208,28 +243,67 @@
   .effect p{ margin:0; font-size:.88rem; color:var(--ink-soft); line-height:1.5; }
 
   /* ================= CARROSSEL DE FOTOS ================= */
-  .carousel{ position:relative; margin:2.2rem auto 0; max-width:620px; }
-  .carousel-track{
-    display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:1.2rem;
-    scrollbar-width:none; -ms-overflow-style:none; margin:0; padding:0; list-style:none;
-  }
-  .carousel-track::-webkit-scrollbar{ display:none; }
-  .carousel-slide{ flex:0 0 100%; scroll-snap-align:center; margin:0; }
-  .carousel-slide img{ width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:14px; display:block; }
-  .carousel-slide figcaption{ display:flex; flex-direction:column; gap:.15rem; margin-top:.7rem; text-align:left; }
-  .carousel-local{ font-weight:600; color:var(--ink); font-size:.92rem; }
-  .carousel-credito{ font-size:.72rem; color:var(--ink-mute); }
-  .carousel-btn{
-    position:absolute; top:38%; transform:translateY(-50%); width:2.5rem; height:2.5rem;
-    border-radius:50%; border:none; background:var(--paper); color:var(--ink);
-    box-shadow:var(--shadow); font-size:1.3rem; line-height:1; cursor:pointer;
-    display:flex; align-items:center; justify-content:center; padding:0;
-  }
-  .carousel-prev{ left:-1.25rem; } .carousel-next{ right:-1.25rem; }
-  @media (max-width:680px){ .carousel-prev{ left:.4rem; } .carousel-next{ right:.4rem; } }
-  .carousel-dots{ display:flex; justify-content:center; gap:.45rem; margin-top:.9rem; }
-  .carousel-dot{ width:.5rem; height:.5rem; border-radius:50%; border:none; padding:0; background:var(--paper-line); cursor:pointer; }
-  .carousel-dot.ativo{ background:var(--a-7); }
+
+    .sec-7 .wrap {
+        max-width: unset;
+        padding: 0;
+    }
+
+    .carousel {
+        position: relative;
+        margin: 2.2rem auto 0;
+    }
+
+    .carousel-track {
+        --card-width: calc(620 / 16 * 1rem);
+        --card-width: clamp(320px, 75vw, calc(620 / 16 * 1rem));
+        --gap: 1.2rem;
+
+        display: flex;
+        overflow-x: auto;
+
+        scroll-snap-type: x mandatory;
+
+        padding-inline: calc(50% - var(--card-width) / 2);
+        padding-block-end: 0.75rem;
+
+        gap: var(--gap);
+    }
+
+    .carousel-slide {
+        flex: 0 0 100%;
+        max-width: var(--card-width);
+        scroll-snap-align: center;
+        margin: 0;
+    }
+
+    .carousel-slide img {
+        width: 100%;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+        border-radius: 14px;
+        display: block;
+    }
+
+    .carousel-slide figcaption {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        margin-top: 0.7rem;
+        text-align: left;
+    }
+
+
+    .carousel-local {
+        font-weight: 600;
+        color: var(--ink);
+        font-size: 0.92rem;
+    }
+
+    .carousel-credito {
+        font-size: 0.72rem;
+        color: var(--ink-mute);
+    }
 
   .chart-card{
     margin:1.8rem auto; max-width:620px;
@@ -355,33 +429,49 @@
 </head>
 <body>
 
-<section class="hero-scroll" id="hero-scroll">
+<main>
+
+<article aria-labelledby="hero-title">
+
+<div class="hero-scroll" id="hero-scroll">
   <div class="hero-pin">
     <canvas id="hero-canvas"></canvas>
     <div class="hero-scrim"></div>
-    <div class="hero-title">Manaus, a cidade que nega a Amazônia</div>
+    <h1 id="hero-title" class="hero-title">Manaus, a cidade que nega a Amazônia</h1>
     <div class="hero-overlay">
-      <div class="hero-year" id="hero-year">2001</div>
-      <div class="hero-temp"><b id="hero-temp-num">32,6</b>°C
-        <span class="hero-temp-label">Temperatura máxima média na superfície da cidade<button type="button" class="cite" data-cite="temp-maxima" aria-label="Ver fonte deste dado"></button></span>
-      </div>
+      <p class="hero-year"><span id="hero-year">2001</span></p>
+      <p class="hero-temp">
+        <b id="hero-temp-num">32,6</b> °C
+        <span class="hero-temp-label">
+            Temperatura máxima média na superfície da cidade
+            <button
+                type="button"
+                class="cite on-dark"
+                data-cite="temp-maxima"
+                aria-label="Ver fonte deste dado">
+            </button>
+        </span>
+      </p>
     </div>
-    <div class="hero-kicker">role para avançar no tempo ↓</div>
-    <div class="hero-progress"><div class="hero-progress-bar" id="hero-progress-bar"></div></div>
+    <div aria-hidden="true" class="hero-kicker">role para avançar no tempo ↓</div>
+    <div aria-hidden="true" class="hero-progress"><div class="hero-progress-bar" id="hero-progress-bar"></div></div>
   </div>
-</section>
+</div>
 
 <section class="block sec-0">
   <div class="wrap">
     <p class="dek">Quando eu era pequeno, ficava muito incomodado quando viajava e ouvia de outras pessoas que Manaus "deve ser só mato". Que devia ter "onça na rua", "jacaré por todo lado". Achava um desconhecimento, afinal todos os eletrônicos que a pessoa tinha deveriam ter saído do Polo Industrial de Manaus.</p>
     <p class="dek">Hoje não mudou tanto, as pessoas ainda falam exatamente o mesmo e eu continuo incomodado. Mas de outra forma.</p>
     <p class="dek">Antes incomodava por ser mentira. Agora incomoda porque eu queria muito que fosse verdade.</p>
-    <h2 style="margin-top:1.6rem">Manaus, a cidade que nega a Amazônia</h2>
   </div>
 </section>
 
+<hr class="thematic-break sec-1" />
+
 <section class="block sec-1">
   <div class="wrap">
+    <h2 style="margin-top:1.6rem">Manaus, a cidade que nega a Amazônia</h2>
+
     <p class="dek">Se fosse verdade, talvez não existisse <strong>8,8°C</strong> de diferença entre a Reserva Adolpho Ducke e um bairro populoso. Não existiria uma diferença que já chegou a incríveis <strong>11,3°C</strong> entre 2 regiões da cidade.</p>
 
     <figure class="therm" aria-labelledby="therm-caption">
@@ -637,9 +727,6 @@
           <figcaption><span class="carousel-local">Manaus</span><span class="carousel-credito">Foto: Adneison Severiano/g1 AM</span></figcaption>
         </figure>
       </div>
-      <button type="button" class="carousel-btn carousel-prev" aria-label="Foto anterior">‹</button>
-      <button type="button" class="carousel-btn carousel-next" aria-label="Próxima foto">›</button>
-      <div class="carousel-dots" id="carousel-dots"></div>
     </div>
   </div>
 </section>
@@ -672,6 +759,10 @@
     </div>
   </div>
 </section>
+
+</article>
+
+</main>
 
 <footer>
   <div class="wrap">
@@ -1549,50 +1640,6 @@
     });
   })();
 
-  // ================= carrossel de fotos (Parques Sem Sombras) =================
-  (function(){
-    const carrossel = document.getElementById('carousel-parques');
-    if(!carrossel) return;
-    const track = document.getElementById('carousel-track');
-    const dotsWrap = document.getElementById('carousel-dots');
-    const prevBtn = carrossel.querySelector('.carousel-prev');
-    const nextBtn = carrossel.querySelector('.carousel-next');
-    const slides = [...track.children];
-
-    slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'carousel-dot';
-      dot.setAttribute('aria-label', 'Ir pra foto ' + (i + 1) + ' de ' + slides.length);
-      dot.addEventListener('click', () => {
-        slides[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      });
-      dotsWrap.appendChild(dot);
-    });
-    const dots = [...dotsWrap.children];
-
-    function atualizarAtivo(){
-      const centro = track.scrollLeft + track.clientWidth / 2;
-      let idx = 0, menor = Infinity;
-      slides.forEach((s, i) => {
-        const d = Math.abs((s.offsetLeft + s.offsetWidth / 2) - centro);
-        if(d < menor){ menor = d; idx = i; }
-      });
-      dots.forEach((d, i) => d.classList.toggle('ativo', i === idx));
-    }
-
-    let pendente = false;
-    track.addEventListener('scroll', () => {
-      if(pendente) return;
-      pendente = true;
-      requestAnimationFrame(() => { atualizarAtivo(); pendente = false; });
-    }, { passive: true });
-
-    prevBtn.addEventListener('click', () => track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' }));
-    nextBtn.addEventListener('click', () => track.scrollBy({ left: track.clientWidth, behavior: 'smooth' }));
-
-    atualizarAtivo();
-  })();
 })();
 </script>
 
