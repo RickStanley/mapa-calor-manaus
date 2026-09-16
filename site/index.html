@@ -182,10 +182,31 @@
   .therm-pt-r{ transform:translateX(-100%); text-align:right; }
   .therm-pt b{ display:block; font-family:"Fraunces",serif; font-size:1.15rem; color:var(--ink); }
   .therm-dot{ position:absolute; top:50%; width:12px; height:12px; margin-top:-6px; margin-left:-6px; border-radius:50%; background:var(--paper); border:2px solid var(--ink); }
-  .therm-diff .num{
-    font-family:"Fraunces",serif; font-size:clamp(.85rem,2.6vw,1.05rem); font-weight:700; color:#fff;
-    line-height:1; text-shadow:0 1px 6px rgba(0,0,0,.4);
+  .therm-diff {
+    color: #2b2620;
   }
+  .therm-diff .num {
+    font-family:"Fraunces",serif; font-size:clamp(.85rem,2.6vw,1.05rem); font-weight:700;
+    line-height:1;
+  }
+
+    .therm-temp {
+        display: block;
+        font-family: "Fraunces", serif;
+        font-size: 1.15rem;
+        color: var(--ink);
+        font-weight: 700;
+    }
+
+    .therm-place {
+        display: block;
+    }
+
+    .therm-caption {
+        margin-block-start: 0.7em;
+        font-size: 80%;
+    }
+
 
   /* ================= STAT TILES (sem fundo) ================= */
   .tiles{ display:flex; flex-wrap:wrap; justify-content:center; gap:2.2rem 3rem; margin:2rem auto; }
@@ -337,17 +358,25 @@
   .swatch{ width:10px; height:10px; border-radius:3px; display:inline-block; }
 
   /* ================= CITAÇÕES: marcador clicável + overlay com a fonte ================= */
+  body {
+    counter-reset: citing;
+  }
+
   .cite{
     display:inline; vertical-align:top; position:relative; top:-.2em;
-    font-size:9px; line-height:1; border:none; background:none;
-    color:var(--ink-mute); cursor:pointer; padding:0 1px;
+    line-height:1; border:none; background:none;
+    cursor:pointer; padding:0 1px;
     font-family:"Work Sans",sans-serif; font-weight:700;
     opacity:.8; transition:opacity .15s, color .15s;
+    font-size: calc(12.8 / 16 * 1rem);
+    color: inherit;
   }
+
   .cite:hover, .cite:focus-visible{ opacity:1; color:var(--a-3); }
-  .cite.on-dark{ color:rgba(245,241,232,.85); }
-  .cite.on-dark:hover, .cite.on-dark:focus-visible{ color:#fff; }
-  .cite::before{ content:"[i]"; }
+  .cite::before{
+    counter-increment: citing;
+    content: "[" counter(citing) "]";
+  }
 
   .cite-overlay{ position:fixed; inset:0; z-index:50; display:none; align-items:center; justify-content:center; padding:1.2rem; }
   .cite-overlay.visivel{ display:flex; }
@@ -445,15 +474,37 @@
 
     <p class="dek">Se fosse verdade, talvez não existisse <strong>8,8°C</strong> de diferença entre a Reserva Adolpho Ducke e um bairro populoso. Não existiria uma diferença que já chegou a incríveis <strong>11,3°C</strong> entre 2 regiões da cidade.</p>
 
-    <div class="therm">
-      <div class="therm-track">
-        <span class="therm-dot" style="left:8%"></span>
-        <span class="therm-dot" style="left:92%"></span>
-        <span class="therm-pt therm-pt-l" style="left:8%">27,9°C<b>Adolpho Ducke</b></span>
-        <span class="therm-pt therm-pt-r" style="left:92%">36,7°C<b>Petrópolis</b></span>
-        <div class="therm-diff"><span class="num">+8,8°C</span><button type="button" class="cite on-dark" data-cite="amplitude-termica" aria-label="Ver fonte deste dado"></button></div>
-      </div>
-    </div>
+    <figure class="therm" aria-labelledby="therm-caption">
+        <div class="therm-track">
+            <span class="therm-dot" style="left: 8%" aria-hidden="true"></span>
+            <span class="therm-dot" style="left: 92%" aria-hidden="true"></span>
+
+            <div class="therm-pt therm-pt-l" style="left: 8%">
+                <data class="therm-temp" value="27.9">27,9 °C</data>
+                <span class="therm-place">Adolpho Ducke</span>
+            </div>
+
+            <div class="therm-pt therm-pt-r" style="left: 92%">
+                <data class="therm-temp" value="36.7">36,7 °C</data>
+                <span class="therm-place">Petrópolis</span>
+            </div>
+
+            <output class="therm-diff" aria-label="Diferença de temperatura">
+                <data class="num" value="8.8">+8,8 °C</data>
+
+                <button
+                    type="button"
+                    class="cite"
+                    data-cite="amplitude-termica"
+                    aria-label="Ver fonte da diferença de temperatura">
+                </button>
+            </output>
+        </div>
+
+        <figcaption id="therm-caption" class="therm-caption">
+            Amplitude térmica entre Adolpho Ducke e Petrópolis
+        </figcaption>
+    </figure>
 
     <p class="dek" style="margin-top:3.4rem">Dizer que Manaus está ficando mais quente não basta. É preciso saber onde, desde quando e por quê.</p>
   </div>
