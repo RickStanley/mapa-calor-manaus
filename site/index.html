@@ -24,6 +24,7 @@
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Work+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@6.3.3/dist/simplebar.css">
 <link rel="stylesheet" href="/styles/styles.css">
 </head>
 <body>
@@ -57,6 +58,13 @@
     <div aria-hidden="true" class="hero-progress"><div class="hero-progress-bar" id="hero-progress-bar"></div></div>
   </div>
 </div>
+
+<aside id="share" class="share-bar" hidden>
+  <div class="share-bar-inner">
+    <button id="share-btn" type="button" class="share-bar-btn">Compartilhar</button>
+    <button id="share-close" type="button" class="share-bar-close" aria-label="Fechar">&times;</button>
+  </div>
+</aside>
 
 <section class="block sec-0">
   <div class="wrap">
@@ -302,11 +310,12 @@
 
 <section class="block sec-7">
   <div class="wrap">
-    <h2>Parques Sem Sombras</h2>
-    <p class="dek">Além de possuir poucos parques pela cidade, Manaus tem o péssimo hábito de construir parques com nenhuma árvore. Ou com árvores que não tem projeção de sombra que faça sentido para uma cidade que continua fervendo.</p>
+    <h2>Plano Diretor de Manaus: Proibido Ter Sombras</h2>
+    <p class="dek">Além de possuir poucos parques pela cidade, Manaus tem o péssimo hábito de construir parques com nenhuma árvore. Ou com árvores que não tem projeção de sombra que faça sentido para uma cidade que continua fervendo. E o padrão se repete no desenvolvimento da cidade: quarteirões inteiros encadeando uma sequência de concreto, asfalto e calor.</p>
 
     <div class="carousel" id="carousel-parques">
       <div class="carousel-track" id="carousel-track">
+        <div class="carousel-spacer carousel-spacer-start" aria-hidden="true"></div>
         <figure class="carousel-slide">
           <img src="fotos/parque-jefferson-peres.jpg" alt="Parque Jefferson Peres, com pouquíssimas árvores e mudas ainda pequenas" loading="lazy">
           <figcaption><span class="carousel-local">Parque Jefferson Peres</span><span class="carousel-credito">Foto: Wagner Fontoura/Wikimedia Commons (CC BY 2.0)</span></figcaption>
@@ -327,6 +336,15 @@
           <img src="fotos/manaus-parque.jpg" alt="Vista aérea de bairros densos de Manaus, sem cobertura de árvores" loading="lazy">
           <figcaption><span class="carousel-local">Manaus</span><span class="carousel-credito">Foto: Adneison Severiano/g1 AM</span></figcaption>
         </figure>
+        <figure class="carousel-slide">
+          <img src="fotos/estrada-do-turismo-desmatamento.jpg" alt="Visão aérea de um condomínio recém-construído cercado de floresta, próximo à Estrada do Turismo" loading="lazy">
+          <figcaption><span class="carousel-local">Visão aérea próxima à Estrada do Turismo</span><span class="carousel-credito">Foto: Google Maps 2026</span></figcaption>
+        </figure>
+        <figure class="carousel-slide">
+          <img src="fotos/condominio-manaus.jpg" alt="Estacionamento e torres de um condomínio residencial em Manaus, sem árvores" loading="lazy">
+          <figcaption><span class="carousel-local">Condomínio Residencial em Manaus, 2026</span><span class="carousel-credito">Foto: Rick S.</span></figcaption>
+        </figure>
+        <div class="carousel-spacer carousel-spacer-end" aria-hidden="true"></div>
       </div>
     </div>
   </div>
@@ -983,13 +1001,14 @@
     <div class="cols">
       <div><h4>Fontes</h4>MODIS MOD11A2, via Google Earth Engine, deu a temperatura de superfície de Manaus célula a célula, 2001 a 2025. MODIS MOD13Q1, a vegetação (NDVI), na mesma grade e período. O JRC Global Surface Water entrou só pra mascarar o Rio Negro, que sem isso seria lido como área degradada. E a Open-Meteo (reanálise ERA5, temperatura do ar desde 1940) serviu de contexto e, principalmente, de calibração: o satélite Terra vem passando cada vez mais cedo sobre Manaus desde 2020, o que deixaria a superfície parecendo mais fria nos últimos anos sem a cidade ter esfriado de verdade. A correção está ligada por padrão em todos os gráficos deste site.</div>
       <div><h4>Sobre os números</h4>Metodologia completa, com absoluto e percentual de cada achado, em <code>numeros_chave.json</code>. Os critérios de limpeza aplicados aos dados brutos, incluindo quantos valores cada um afetou, estão em <code>criterios_limpeza.json</code>. Código e dados abertos no <a href="https://github.com/sjbruno/mapa-calor-manaus" target="_blank" rel="noopener">GitHub</a>.</div>
-      <div><h4>manausodeiaarvores.com.br</h4>Um projeto de dados abertos sobre calor, vegetação e as escolhas que aqueceram Manaus. Feito por <a href="https://brunotemum.site" target="_blank" rel="noopener">Bruno Dantas</a>.</div>
+      <div><h4>manausodeiaarvores.com.br</h4>Um projeto de dados abertos sobre calor, vegetação e as escolhas que aqueceram Manaus. Feito por <a href="https://brunotemum.site" target="_blank" rel="noopener">Bruno Dantas</a>. Com colaboração de <a href="https://www.linkedin.com/in/rick-s-6103b8136/" target="_blank" rel="noopener">Rick Stanley</a>.</div>
     </div>
   </div>
 </footer>
 
 <div class="grafico-tooltip" id="grafico-tooltip" role="status" aria-live="polite"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/simplebar@6.3.3/dist/simplebar.min.js"></script>
 <script src="/scripts/main.js"></script>
 
 </body>
