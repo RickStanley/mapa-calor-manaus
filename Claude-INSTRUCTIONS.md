@@ -132,7 +132,32 @@ arquivo local é bloqueado pelo navegador, então o hero e o mapa de ilhas de
 calor não carregam (o `try/catch` evita que isso quebre o resto, mas essas
 duas partes específicas ficam sempre vazias nesse modo). Sirva a pasta
 `site/` com qualquer servidor estático antes de testar localmente, por
-exemplo `python3 -m http.server` de dentro de `site/`.
+exemplo `python3 -m http.server` de dentro de `site/`. Como esse servidor
+não manda `Cache-Control`, o navegador pode reaproveitar CSS/JS antigos
+entre um ajuste e outro — se algo parecer "não aplicou", suspeitar de cache
+antes de suspeitar do código (já aconteceu mais de uma vez neste projeto).
+Testar num celular na mesma rede exige passar o IP local (`ipconfig
+getifaddr en0`) em vez de `localhost` — mas isso NÃO é um contexto seguro
+(HTTPS ou loopback), então qualquer feature que exija contexto seguro (ex.:
+`navigator.share`, a barra de compartilhar) fica indisponível só nesse
+teste por IP, mesmo funcionando normal em produção (HTTPS) e em
+`localhost` no desktop.
+
+Desde 17/09/2026 o site tem uma dependência externa via CDN: a lib
+[SimpleBar](https://github.com/Grsmto/simplebar) (`simplebar.css` +
+`simplebar.min.js`, versão pinada, carregada no `<head>`/fim do `<body>`
+de `index.html`) cuida da barra de rolagem customizada do carrossel de
+fotos. Ela é inicializada manualmente em `main.js`
+(`new SimpleBar(carrossel, { autoHide: false })`) em vez de usar o
+atributo `data-simplebar` com auto-init — o auto-init só roda no
+`DOMContentLoaded`, que acontece depois do próprio `main.js`, então o
+código que precisa da instância (o arrasto por mouse) ainda não a
+encontraria a tempo. Outra pegadinha: dar `padding` no elemento que a lib
+gera (`.simplebar-content-wrapper`) não funciona de forma confiável (ela
+mexe no próprio estilo desse elemento por baixo dos panos) — o jeito que
+funcionou pra controlar o respiro do início/fim do carrossel foi usar
+spacers reais (`.carousel-spacer-start`/`-end`) como primeiro/último item
+do `.carousel-track`, não padding no container de scroll.
 
 Para atualizar os números depois de rodar o pipeline de novo: os dados que
 alimentam o site vêm de `data/processed/` (os Parquet por ano, `grade.geojson`
