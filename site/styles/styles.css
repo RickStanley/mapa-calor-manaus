@@ -619,6 +619,7 @@ section.block {
     cursor: grabbing;
     scroll-snap-type: none;
     scroll-behavior: auto;
+    user-select: none;
 }
 
 .carousel-track {
@@ -632,7 +633,6 @@ section.block {
     padding-block-end: 0.75rem;
     gap: var(--gap);
     cursor: grab;
-    user-select: none;
 }
 
 .carousel-slide {
