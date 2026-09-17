@@ -730,8 +730,19 @@
 })();
 
 (function(){
+    const carrossel = document.getElementById('carousel-parques');
     const track = document.getElementById('carousel-track');
-    if (!track) return;
+    if (!carrossel || !track) return;
+
+    // Inicializa o SimpleBar aqui mesmo (em vez de contar com o atributo
+    // data-simplebar + auto-init): o auto-init só roda no DOMContentLoaded,
+    // que acontece DEPOIS deste script, então a instância ainda não
+    // existiria se a gente só fosse ler SimpleBar.instances aqui.
+    // autoHide:false porque a barra precisa ficar sempre visível.
+    const instanciaSimpleBar = window.SimpleBar
+        ? new SimpleBar(carrossel, { autoHide: false })
+        : null;
+    const scrollEl = instanciaSimpleBar ? instanciaSimpleBar.getScrollElement() : track;
 
     let arrastando = false;
     let comecouX = 0;
@@ -752,9 +763,9 @@
         arrastando = true;
         moveu = false;
         comecouX = e.clientX;
-        scrollInicial = track.scrollLeft;
+        scrollInicial = scrollEl.scrollLeft;
 
-        track.classList.add('is-dragging');
+        carrossel.classList.add('is-dragging');
         track.setPointerCapture(e.pointerId);
     });
 
@@ -767,14 +778,14 @@
             moveu = true;
         }
 
-        track.scrollLeft = scrollInicial - distancia;
+        scrollEl.scrollLeft = scrollInicial - distancia;
     });
 
     function soltar(e) {
         if (!arrastando) return;
 
         arrastando = false;
-        track.classList.remove('is-dragging');
+        carrossel.classList.remove('is-dragging');
 
         if (track.hasPointerCapture(e.pointerId)) {
             track.releasePointerCapture(e.pointerId);
@@ -785,7 +796,7 @@
     track.addEventListener('pointercancel', soltar);
     track.addEventListener('lostpointercapture', () => {
         arrastando = false;
-        track.classList.remove('is-dragging');
+        carrossel.classList.remove('is-dragging');
     });
 
     track.addEventListener(
@@ -803,4 +814,32 @@
     track.querySelectorAll('img').forEach((img) => {
         img.draggable = false;
     });
+})();
+
+// ================= barra de compartilhar (Web Share API) =================
+// Só aparece se o navegador suportar navigator.share, e some pra sempre
+// (mesmo depois de recarregar a página) se a pessoa fechar no X --
+// preferência salva no localStorage, não é só esconder na sessão atual.
+(function () {
+  const CHAVE_FECHADO = 'compartilhar-fechado';
+  if (localStorage.getItem(CHAVE_FECHADO)) return;
+  if (!('share' in navigator)) return;
+
+  const shareData = {
+    title: 'Manaus Odeia Árvores',
+    url: 'https://manausodeiaarvores.com.br/',
+  };
+  if (!navigator.canShare?.(shareData)) return;
+
+  const barra = document.getElementById('share');
+  if (!barra) return;
+  barra.hidden = false;
+
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    void navigator.share(shareData);
+  });
+  document.getElementById('share-close')?.addEventListener('click', () => {
+    localStorage.setItem(CHAVE_FECHADO, '1');
+    barra.remove();
+  });
 })();
