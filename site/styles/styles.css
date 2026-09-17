@@ -1030,6 +1030,7 @@ section.block {
 }
 
 .notes__note {
+    /* altura aprox. de .share-bar em px, não precisa ser exato pois 90% do código usa rem */
     --sticky-header-approximate-height: 46;
     --margin-top: calc(var(--sticky-header-approximate-height) / 16 * 1rem);
     scroll-margin-top: calc(var(--margin-top) + .5rem);
