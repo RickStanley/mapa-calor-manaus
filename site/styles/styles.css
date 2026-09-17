@@ -1029,6 +1029,12 @@ section.block {
     color: var(--a-3);
 }
 
+.notes__note {
+    --sticky-header-approximate-height: 46;
+    --margin-top: calc(var(--sticky-header-approximate-height) / 16 * 1rem);
+    scroll-margin-top: calc(var(--margin-top) + .5rem);
+}
+
 .notes .note-type {
     font-family: "Work Sans", sans-serif;
     font-size: .7rem;
