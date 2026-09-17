@@ -98,6 +98,8 @@ img {
     max-width: 100%
 }
 
+
+.sec-7 .wrap__sentinel,
 .wrap {
     max-width: 900px;
     margin: 0 auto;
@@ -106,6 +108,7 @@ img {
 }
 
 @media (min-width: 640px) {
+    .sec-7 .wrap__sentinel,
     .wrap {
         padding: 0 1.75rem;
     }
@@ -673,6 +676,10 @@ section.block {
 .sec-7 .wrap {
     max-width: unset;
     padding: 0;
+}
+
+.sec-7 .dek {
+    text-wrap: balance;
 }
 
 .carousel {
