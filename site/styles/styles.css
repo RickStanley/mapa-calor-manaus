@@ -282,6 +282,14 @@ section.block {
     box-shadow: var(--shadow);
 }
 
+.share-bar.unstuck {
+    position: static;
+}
+
+.share-bar.unstuck .share-bar-close {
+    display: none;
+}
+
 .share-bar[hidden] {
     display: none;
 }

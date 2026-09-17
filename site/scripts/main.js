@@ -817,29 +817,35 @@
 })();
 
 // ================= barra de compartilhar (Web Share API) =================
-// Só aparece se o navegador suportar navigator.share, e some pra sempre
-// (mesmo depois de recarregar a página) se a pessoa fechar no X --
-// preferência salva no localStorage, não é só esconder na sessão atual.
 (function () {
-  const CHAVE_FECHADO = 'compartilhar-fechado';
-  if (localStorage.getItem(CHAVE_FECHADO)) return;
+  const CHAVE_DESCOLADO = 'share-unstuck';
+
   if (!('share' in navigator)) return;
 
   const shareData = {
     title: 'Manaus Odeia Árvores',
     url: 'https://manausodeiaarvores.com.br/',
   };
+
   if (!navigator.canShare?.(shareData)) return;
 
   const barra = document.getElementById('share');
+
   if (!barra) return;
+
+  if (localStorage.getItem(CHAVE_DESCOLADO)) {
+    barra.classList.add('unstuck');
+  }
+
   barra.hidden = false;
 
   document.getElementById('share-btn')?.addEventListener('click', () => {
     void navigator.share(shareData);
   });
+
   document.getElementById('share-close')?.addEventListener('click', () => {
-    localStorage.setItem(CHAVE_FECHADO, '1');
-    barra.remove();
+    localStorage.setItem(CHAVE_DESCOLADO, '1');
+    barra.classList.add('unstuck');
   });
+
 })();
